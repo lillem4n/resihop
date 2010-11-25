@@ -1,7 +1,11 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 //-- Environment setup --------------------------------------------------------
-Kohana::$environment = Kohana::PRODUCTION;
+Kohana::$environment = 'development';
+if (Kohana::$environment != Kohana::PRODUCTION)
+{
+	Kohana::$profiling   = FALSE;
+}
 
 /**
  * Set the default time zone.
