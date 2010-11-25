@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"
+                   xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+	<ShortName>Resihop.nu</ShortName>
+	<Description>Samåkning på internet.</Description>
+	<Tags>Samåkning resihop skjuts bilplats</Tags>
+	<Contact>info@resihop.nu</Contact>
+	<InputEncoding>utf-8</InputEncoding>
+	<OutputEncoding>utf-8</OutputEncoding>
+	<Image width="16" height="16" type="image/x-icon">http://resihop.nu/favicon.png</Image>
+	<Url type="text/html" method="get" template="http://dev.resihop.nu/search?q={searchTerms}">
+	</Url>
+	<Url type="application/opensearchdescription+xml"
+		rel="self"
+		template="http://resihop.nu/search.xml" />
+	<Query role="example" searchTerms="Stockholm" />
+	<Language>en-us</Language>
+	<Language>en-gb</Language>
+	<Language>sv-se</Language>
+	<moz:SearchForm>http://resihop.nu/</moz:SearchForm>
+	<AdultContent>false</AdultContent>
+	<Attribution>Kopimi!</Attribution>
+</OpenSearchDescription>

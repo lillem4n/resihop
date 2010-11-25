@@ -1,0 +1,7 @@
+#messages .button{
+	padding: .5em 0;
+	margin: 1em auto 0 auto;
+	width: 10em;
+	display: block;
+	text-align: center;
+}
