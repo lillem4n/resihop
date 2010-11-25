@@ -1,0 +1,3 @@
+application/cache/*
+application/logs/*
+application/config/pdo.php
