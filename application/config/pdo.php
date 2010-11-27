@@ -11,9 +11,9 @@ return array
 	(
 		'driver'        => 'mysql',
 		'hostname'      => 'localhost',
-		'database_name' => 'foobar',
-		'username'      => 'user',
-		'password'      => 'pass',
+		'database_name' => 'resihop',
+		'username'      => 'root',
+		'password'      => 'root',
 	),
 
 	// SQLite example
