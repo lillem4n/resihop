@@ -13,7 +13,7 @@ return array
 		'hostname'      => 'localhost',
 		'database_name' => 'resihop',
 		'username'      => 'root',
-		'password'      => 'hemligt',
+		'password'      => 'root',
 	),
 
 	// SQLite example
