@@ -1,0 +1,3 @@
+[submodule "modules/pajas"]
+	path = modules/pajas
+	url = git://github.com/lillem4n/kohana-module-pajas
