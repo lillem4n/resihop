@@ -17,6 +17,11 @@
 			<head>
 				<meta charset="UTF-8" />
 				<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+				<meta name="description">
+					<xsl:attribute name="content">
+						<xsl:call-template name="description" />
+					</xsl:attribute>
+				</meta>
 				<link type="text/css" rel="stylesheet" media="all">
 					<xsl:attribute name="href">
 						<xsl:text>/css/style-</xsl:text>
@@ -816,8 +821,24 @@
 						<xsl:choose>
 							<xsl:when test="/root/meta/url_params/got_car = 1">bilplatser</xsl:when>
 							<xsl:when test="/root/meta/url_params/got_car = 0">passagerare</xsl:when>
-							<xsl:otherwise>resor till eller från <xsl:value-of select="/root/meta/url_params/q" /></xsl:otherwise>
+							<xsl:otherwise>resor</xsl:otherwise>
 						</xsl:choose>
+					<xsl:if test="/root/meta/url_params/q and not(/root/meta/url_params/q = '')" >
+						<xsl:value-of select="'till eller från '" />
+						<xsl:value-of select="/root/meta/url_params/q" />
+					</xsl:if>					
+					<xsl:if test="/root/meta/url_params/from and not(/root/meta/url_params/from = '')" >
+						<xsl:value-of select="' från '" />
+						<xsl:value-of select="/root/meta/url_params/from" />
+					</xsl:if>
+					<xsl:if test="/root/meta/url_params/to and not(/root/meta/url_params/to = '')" >								
+							<xsl:value-of select="' till '" />
+						<xsl:value-of select="/root/meta/url_params/to" />
+					</xsl:if>
+					<xsl:if test="/root/meta/url_params/when and not(/root/meta/url_params/when = '')" >								
+							<xsl:value-of select="' den '" />
+						<xsl:value-of select="/root/meta/url_params/when" />
+					</xsl:if>
 					</xsl:if>
 				</h2>
 				<table>

@@ -5,6 +5,8 @@
 
 	<xsl:template name="title">Ett miljövänligt och billigt sätt att resa - Samåkning</xsl:template>
 
+	<xsl:template name="description">Hitta människor för samåkning, ingen registrering, inget krångel! Det är bara att lägga upp resan som passagerare eller förare.</xsl:template>
+
 	<xsl:template match="/">
 		<xsl:call-template name="base" />
 	</xsl:template>
