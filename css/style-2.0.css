@@ -114,6 +114,9 @@ a.header{
 	height: 10em;
 }
 
+#hidden{
+	display: hidden;
+}
 /* ------------- Menu! ---------------- */
 
 #menu {
@@ -146,11 +149,11 @@ a.header{
 	background:         url(/images/bluegreen.png) no-repeat center bottom;
 }
 
-div.driver .highfive {
+.highfive.driver {
 	background:         url(/images/bluewhite.png) no-repeat center bottom;
 }
 
-div.passenger .highfive {
+.highfive.passenger {
 	background:         url(/images//greenwhite.png) no-repeat center bottom;
 }
 
@@ -308,6 +311,9 @@ fieldset .button {
 	float:              right;
 	margin:             .9em 1.7em 1.4em 0;
 }
+.hidden{
+	display:	none;
+}
 
 #radiobuttons input {
 	font-size:          1.2em;
@@ -393,6 +399,7 @@ fieldset.savetrip, div.savetrip {
 }
 
 .savetrip #contact {
+    margin-bottom:		-2em;
 	width:              22em;
 	float:              left;
 }
@@ -443,7 +450,7 @@ fieldset, th, div.savetrip, .message_box{
 	color:              rgb(28,101,109);
 }
 
-fieldset.passenger, .passenger fieldset, .passenger th, .passenger div.savetrip {
+fieldset.passenger, .passenger th, div.savetrip.passenger {
 	background:         rgb(167,209,110);
 	color:              rgb(79,112,52);
 }
@@ -452,7 +459,7 @@ fieldset.passenger, .passenger fieldset, .passenger th, .passenger div.savetrip 
 fieldset h2, .button, div.savetrip h2, .message_box h2 {
 	background:         rgb(28,101,109);
 }
-.passenger h2, .passenger .button, .passenger div.savetrip h2 {
+.passenger h2, .passenger .button,  div.savetrip.passenger h2 {
 	background:         rgb(97,140,61);
 }
 
@@ -460,7 +467,7 @@ p, #searchresults h2 {
 	color:              rgb(28,101,109);
 }
 
-.passenger p, .passenger div#searchresults h2 {
+.passenger p, div#searchresults.passenger h2 {
 	color:              rgb(97,140,61);
 }
 
@@ -468,7 +475,7 @@ p, #searchresults h2 {
 	background:			rgb(147, 206, 225)!important;
 }
 
-.passenger #searchresults tr.highlight td{
+#searchresults.passenger tr.highlight td{
 	background:			rgb(167, 209, 110)!important;
 }
 
@@ -487,7 +494,7 @@ p, #searchresults h2 {
 	background:         url(/images/bluecalendar.png) no-repeat  center right white;
 }
 
-.passenger .when, .passenger fieldset .when {
+fieldset.passenger  .when {
 	background:         url(/images/greencalendar.png) no-repeat  center right white;
 }
 
@@ -495,7 +502,7 @@ div.savetrip table, div.savetrip p.code{
 	background: rgb(213,235,243);
 }
 
-.passenger div.savetrip table, .passenger div.savetrip p.code{
+div.savetrip.passenger table, div.savetrip.passenger p.code{
 	background: rgb(219,238,199);
 }
 /*----- errormessages --------*/
@@ -819,7 +826,10 @@ img#kundo_feedback {
 /*------------- geo_autocomplete -----------------*/
 
 
-.ui-autocomplete { width:16em; }
+.ui-autocomplete { 
+	width:			16em;
+	margin-bottom:	-100%;		
+}
 
 .ui-autocomplete li {
 	position:				relative;

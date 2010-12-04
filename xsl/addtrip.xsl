@@ -14,16 +14,41 @@
 	<xsl:template match="/root/content">
 		<xsl:choose>
 			<xsl:when test="/root/content/new_trip/*">
-				<xsl:call-template name="trip_saved">
-					<xsl:with-param name="header" select="'Din resa är sparad'" />
-				</xsl:call-template>
+				<xsl:if test="/root/meta/url_params/got_car = 1">
+					<xsl:call-template name="trip_saved">
+						<xsl:with-param name="type" select="'driver'" />
+						<xsl:with-param name="header" select="'Din resa är sparad'" />
+					</xsl:call-template>
+				</xsl:if>
+				<xsl:if test="/root/meta/url_params/got_car = 0">
+					<xsl:call-template name="trip_saved">
+						<xsl:with-param name="type" select="'passenger'" />
+						<xsl:with-param name="header" select="'Din resa är sparad'" />
+					</xsl:call-template>
+				</xsl:if>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:call-template name="trip_form">
-					<xsl:with-param name="header" select="'Spara din resa'" />
-					<xsl:with-param name="size" select="'savetrip'" />
-					<xsl:with-param name="function" select="'addtrip'" />
-				</xsl:call-template>
+				<xsl:if test="/root/meta/url_params/got_car = 1">
+					<xsl:call-template name="trip_form">
+						<xsl:with-param name="type" select="'driver'" />
+						<xsl:with-param name="header" select="'Spara din resa'" />
+						<xsl:with-param name="function" select="'addtrip'" />
+					</xsl:call-template>
+				</xsl:if>
+				<xsl:if test="/root/meta/url_params/got_car = 0">
+					<xsl:call-template name="trip_form">
+						<xsl:with-param name="type" select="'passenger'" />
+						<xsl:with-param name="header" select="'Spara din resa'" />
+						<xsl:with-param name="function" select="'addtrip'" />
+					</xsl:call-template>
+				</xsl:if>
+				<xsl:if test="/root/meta/url_params/got_car = '' or not(/root/meta/url_params/got_car)">
+					<xsl:call-template name="trip_form">
+						<xsl:with-param name="type" select="''" />
+						<xsl:with-param name="header" select="'Spara din resa'" />
+						<xsl:with-param name="function" select="'addtrip'" />
+					</xsl:call-template>
+				</xsl:if>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>

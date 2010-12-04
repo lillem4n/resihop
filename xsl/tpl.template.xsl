@@ -33,7 +33,6 @@
 				<link rel="icon" type="image/png" href="/favicon.png" />
 				<link rel="search" type="application/opensearchdescription+xml" href="quicksearch.xml" title="Resihop.nu" />
 				<title><xsl:call-template name="title" /></title>
-				<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"><![CDATA[ // ]]></script>
 				<script type="text/javascript" src="/js/jquery-1.4.2.min.js"><![CDATA[ // ]]></script>
 				<script type="text/javascript" src="/js/ui.geo_autocomplete.js"><![CDATA[ // ]]></script>
 				<script type="text/javascript" src="/js/common-2.0.js"><![CDATA[ // ]]></script>
@@ -51,24 +50,6 @@
 			</head>
 			<body>
 				<div id="wrapper">
-					<xsl:choose>
-						<xsl:when test="/root/meta/controller = 'search'">
-							<xsl:if test="/root/meta/url_params/got_car = 1">
-								<xsl:attribute name="class">driver</xsl:attribute>
-							</xsl:if>
-							<xsl:if test="/root/meta/url_params/got_car = 0">
-								<xsl:attribute name="class">passenger</xsl:attribute>
-							</xsl:if>
-						</xsl:when>
-						<xsl:otherwise>
-							<xsl:if test="/root/meta/url_params/got_car = 1">
-								<xsl:attribute name="class">passenger</xsl:attribute>
-							</xsl:if>
-							<xsl:if test="/root/meta/url_params/got_car = 0">
-								<xsl:attribute name="class">driver</xsl:attribute>
-							</xsl:if>
-						</xsl:otherwise>
-					</xsl:choose>
 					<div id="header">
 						<a class="header" href="/"><h1>resihop</h1></a>
 						<ul id="menu">
@@ -130,7 +111,6 @@
 
 	<xsl:template name="trip_form">
 		<xsl:param name="type" />
-		<xsl:param name="size" />
 		<xsl:param name="header" />
 		<xsl:param name="function" />
 
@@ -143,9 +123,16 @@
 			</xsl:if>
 		</xsl:variable>
 
-		<form class="trip" method="get">
+		<form class="trip">
+			<xsl:attribute name="method">
+				<xsl:choose>
+					<xsl:when test="$function = 'addtrip'">post</xsl:when>
+					<xsl:otherwise>get</xsl:otherwise>
+				</xsl:choose>
+			</xsl:attribute>
 			<xsl:attribute name="action">
 				<xsl:choose>
+					<!-- @todo förenkla! -->
 					<xsl:when test="$function != ''">
 						<xsl:value-of select="'/'" />
 						<xsl:value-of select="$function" />
@@ -157,46 +144,52 @@
 			</xsl:attribute>
 			<fieldset>
 				<xsl:attribute name="class">
-					<xsl:value-of select="$newtype" />
+					<xsl:if test="$function = 'welcome' or $function =  'search'">
+						<xsl:value-of select="$type" />
+					</xsl:if>
+					<xsl:if test="($function = 'addtrip' or $function =  'edittrip') and $type =  'driver'">
+						passenger
+					</xsl:if>
+					<xsl:if test="($function = 'addtrip' or $function =  'edittrip') and $type =  'passenger'">
+						driver
+					</xsl:if>
 					<xsl:text> </xsl:text>
-					<xsl:value-of select="$size" />
+					<xsl:if test="$function = 'addtrip' or $function ='edittrip'">
+						savetrip
+					</xsl:if>
+					<xsl:if test="$function = 'search'">
+						search
+					</xsl:if>
 				</xsl:attribute>
 				<h2>
-				<xsl:choose>
-					<xsl:when test='$header'>
-						<xsl:value-of select="$header" />
-					</xsl:when>
-					<xsl:when test="$size = '' and /root/meta/url_params/got_car = 0">Jag söker passagerare</xsl:when>
-					<xsl:when test="$size = '' and /root/meta/url_params/got_car = 1">Jag söker skjuts</xsl:when>
-					<xsl:otherwise>Specificera din sökning</xsl:otherwise>
-				</xsl:choose>
+					<xsl:value-of select="$header" />
 				</h2>
-				<xsl:if test="$size = 'savetrip'">
+				<xsl:if test="$function = 'addtrip' or $function ='edittrip'">
 					<p class="regular">
 						<xsl:choose>
-								<xsl:when test="/root/meta/controller = 'addtrip'">
-									För att andra ska kunna kontakta dig behöver vi lite mer information.
-								</xsl:when>
-								<xsl:when test="/root/meta/controller = 'edittrip' and not(/root/meta/url_params/posted)">
-									Ändra de uppgifter du vill. Låt de andra vara som de är.
-								</xsl:when>
-								<xsl:when test="/root/meta/controller = 'edittrip' and /root/meta/url_params/posted">
-									Dina uppgifter är nu ändrade!
-								</xsl:when>
-								<xsl:otherwise>
-									Vi hittade <em>inga
-									<xsl:if test="/root/meta/url_params/got_car = '0'">
-										passagerare
-									</xsl:if>
-									<xsl:if test="/root/meta/url_params/got_car = '1'">
-										bilar
-									</xsl:if>
-									</em> för din sökning. Ange dina kontaktuppgifter så att andra kan <em>hitta dig</em>.
-								</xsl:otherwise>
+							<xsl:when test="$function = 'addtrip'">
+								För att andra ska kunna kontakta dig behöver vi lite mer information.
+							</xsl:when>
+							<xsl:when test="$function = 'edittrip' and not(/root/meta/url_params/posted)">
+								Ändra de uppgifter du vill. Låt de andra vara som de är.
+							</xsl:when>
+							<xsl:when test="$function = 'edittrip' and /root/meta/url_params/posted">
+								Dina uppgifter är nu ändrade!
+							</xsl:when>
+							<xsl:otherwise>
+								Vi hittade <em>inga
+								<xsl:if test="$type = 'passenger'">
+									passagerare
+								</xsl:if>
+								<xsl:if test="$type = 'driver'">
+									bilar
+								</xsl:if>
+								</em> för din sökning. Ange dina kontaktuppgifter så att andra kan <em>hitta dig</em>.
+							</xsl:otherwise>
 						</xsl:choose>
 					</p>
 				</xsl:if>
-				<xsl:if test="$size = 'savetrip'">
+				<xsl:if test="$function = 'addtrip'">
 					<input type="hidden" name="posted" value="" />
 				</xsl:if>
 				<div class="generals">
@@ -219,7 +212,7 @@
 						<xsl:with-param name="value" select="/root/meta/url_params/when" />
 					</xsl:call-template>
 				</div>
-				<xsl:if test="$size = 'savetrip'">
+				<xsl:if test="$function = 'addtrip' or $function ='edittrip'">
 					<div id="contact">
 		 				<xsl:call-template name="inputfield">
 							<xsl:with-param name="inputid" select="'name'" />
@@ -236,6 +229,7 @@
 					</div>
 					<div id="details">
 						<label class="regular" for="details">Detaljer</label>
+						<!-- Störig buggfix för att fixa störig bugg i backend renderingen -->
 						<textarea id="details" name="details" class="field" rows="4" cols="10">
 							<xsl:choose>
 								<xsl:when test="(/root/meta/url_params/details = '' or not(/root/meta/url_params/details)) and not(/root/content/trip_data/details)">
@@ -251,111 +245,38 @@
 						</textarea>
 					</div>
 				</xsl:if>
-				<xsl:choose>
-					<xsl:when test="/root/meta/path = 'edittrip' or ((/root/meta/url_params/got_car ='' or not(/root/meta/url_params/got_car)) and /root/meta/controller != 'welcome')">
 						<div id="radiobuttons">
-							<xsl:choose>
-								<xsl:when test =" $size = ''">
-									<input id="car" type="radio" value="1" name="got_car">
-										<xsl:if test="/root/meta/url_params/got_car = 1">
-											<xsl:attribute name="checked">
-												checked
-											</xsl:attribute>
-										</xsl:if>
-										<xsl:if test="not(/root/meta/url_params/got_car) and /root/content/trip_data/got_car = 1">
-											<xsl:attribute name="checked">
-												checked
-											</xsl:attribute>
-										</xsl:if>
-									</input>
-									<xsl:if test="/root/meta/controller = 'search'">
-										<label class="regular" for="car">Jag söker skjuts</label>
-									</xsl:if>
-									<xsl:if test="not(/root/meta/controller = 'search')">
-										<label class="regular" for="car">Jag söker passagerare</label>
-									</xsl:if>
-									<input id="passenger" type="radio" value="0" name="got_car">
-										<xsl:if test="/root/meta/url_params/got_car = 0">
-											<xsl:attribute name="checked">
-												checked
-											</xsl:attribute>
-										</xsl:if>
-										<xsl:if test="not(/root/meta/url_params/got_car) and /root/content/trip_data/got_car = 0">
-											<xsl:attribute name="checked">
-												checked
-											</xsl:attribute>
-										</xsl:if>
-									</input>
-									<xsl:if test="/root/meta/controller = 'search'">
-										<label class="regular" for="passenger">Jag söker passagerare</label>
-									</xsl:if>
-									<xsl:if test="not(/root/meta/controller = 'search')">
-										<label class="regular" for="passenger">Jag söker skjuts</label>
-									</xsl:if>
-								</xsl:when>
-
-								<xsl:when test =" $size = 'savetrip'">
-									<input id="car" type="radio" value="1" name="got_car">
-										<xsl:if test="/root/meta/url_params/got_car = 0">
-											<xsl:attribute name="checked">
-												checked
-											</xsl:attribute>
-										</xsl:if>
-										<xsl:if test="not(/root/meta/url_params/got_car) and /root/content/trip_data/got_car = 0">
-											<xsl:attribute name="checked">
-												checked
-											</xsl:attribute>
-										</xsl:if>
-									</input>
-										<label class="regular" for="car">Jag söker skjuts</label>
-										<input id="passenger" type="radio" value="0" name="got_car">
-											<xsl:if test="/root/meta/url_params/got_car = 1">
-												<xsl:attribute name="checked">
-													checked
-												</xsl:attribute>
-											</xsl:if>
-											<xsl:if test="not(/root/meta/url_params/got_car) and /root/content/trip_data/got_car = 1">
-												<xsl:attribute name="checked">
-													checked
-												</xsl:attribute>
-											</xsl:if>
-									</input>
-									<label class="regular" for="passenger">Jag söker passagerare</label>
-								</xsl:when>
-							</xsl:choose>
+							<xsl:if test="(/root/meta/controller = 'welcome') or not($type = '')">
+								<xsl:attribute name="class">
+									hidden
+								</xsl:attribute>
+							</xsl:if>
+							<input id="car" type="radio" value="1" name="got_car">
+								<xsl:if test="
+								$type = 'driver'
+								">
+									<xsl:attribute name="checked">
+										checked
+									</xsl:attribute>
+								</xsl:if>
+							</input>
+							<label class="regular" for="car">Jag söker skjuts</label>
+							<input id="passenger" type="radio" value="0" name="got_car">
+								<xsl:if test="
+								$type = 'passenger'
+								">
+									<xsl:attribute name="checked">
+										checked
+									</xsl:attribute>
+								</xsl:if>
+							</input>
+							<label class="regular" for="passenger">Jag söker passagerare</label>
 						</div>
 						<input type="hidden" name="code">
 							<xsl:attribute name="value">
 								<xsl:value-of select="/root/meta/url_params/code" />
 							</xsl:attribute>
 						</input>
-					</xsl:when>
-					<xsl:otherwise>
-						<input type="hidden" name="got_car">
-							<xsl:attribute name="value">
-								<xsl:choose>
-									<xsl:when test="/root/meta/url_params/got_car and not($size = 'savetrip')" >
-										<xsl:value-of select="/root/meta/url_params/got_car" />
-									</xsl:when>
-									<xsl:when test="/root/meta/url_params/got_car and $size = 'savetrip'" >
-										<xsl:if test="/root/meta/url_params/got_car = 0">
-											<xsl:value-of select="1" />
-										</xsl:if>
-										<xsl:if test="/root/meta/url_params/got_car = 1">
-											<xsl:value-of select="0" />
-										</xsl:if>
-									</xsl:when>
-									<xsl:when test="not(/root/meta/url_params/got_car) and $newtype='passenger'">
-										<xsl:value-of select="'0'" />
-									</xsl:when>
-									<xsl:otherwise>
-											<xsl:value-of select="'1'" />
-									</xsl:otherwise>
-								</xsl:choose>
-							</xsl:attribute>
-						</input>
-					</xsl:otherwise>
-				</xsl:choose>
 				<input class="button" type="submit">
 					<xsl:attribute name="value">
 					<xsl:choose>
@@ -386,7 +307,17 @@
 
 	<xsl:template name="trip_saved">
 		<xsl:param name="header" />
-		<div class="savetrip">
+		<xsl:param name="type" />
+		<div>
+			<xsl:attribute name='class'>
+				<xsl:if test="$type =  'driver'">
+					passenger
+				</xsl:if>
+				<xsl:if test="$type =  'passenger'">
+					driver
+				</xsl:if>
+				<xsl:text> savetrip</xsl:text>
+			</xsl:attribute>
 			<h2>
 				<xsl:value-of select="$header" />
 			</h2>
@@ -395,27 +326,29 @@
 				<p class="code">
 					<xsl:value-of select="/root/content/new_trip/code" />
 				</p>
-					<p class="prebutton">Lägg till
-						<a class="button">
-							<xsl:attribute name="href">
-								<xsl:text>http://</xsl:text>
-								<xsl:value-of select="/root/meta/domain" />
-								<xsl:text>/addtrip?from=</xsl:text>
-								<xsl:value-of select="/root/content/new_trip/to" />
-								<xsl:text>&amp;to=</xsl:text>
-								<xsl:value-of select="/root/content/new_trip/from" />
-								<xsl:text>&amp;name=</xsl:text>
-								<xsl:value-of select="/root/content/new_trip/name" />
-								<xsl:text>&amp;email=</xsl:text>
-								<xsl:value-of select="/root/content/new_trip/email" />
-								<xsl:text>&amp;phone=</xsl:text>
-								<xsl:value-of select="/root/content/new_trip/phone" />
-								<xsl:text>&amp;details=</xsl:text>
-								<xsl:value-of select="/root/content/new_trip/details" />
-							</xsl:attribute>
-							Returresa
-						</a>
-					</p>
+				<p class="prebutton">Lägg till
+					<a class="button">
+						<xsl:attribute name="href">
+							<xsl:text>http://</xsl:text>
+							<xsl:value-of select="/root/meta/domain" />
+							<xsl:text>/addtrip?from=</xsl:text>
+							<xsl:value-of select="/root/content/new_trip/to" />
+							<xsl:text>&amp;to=</xsl:text>
+							<xsl:value-of select="/root/content/new_trip/from" />
+							<xsl:text>&amp;name=</xsl:text>
+							<xsl:value-of select="/root/content/new_trip/name" />
+							<xsl:text>&amp;email=</xsl:text>
+							<xsl:value-of select="/root/content/new_trip/email" />
+							<xsl:text>&amp;phone=</xsl:text>
+							<xsl:value-of select="/root/content/new_trip/phone" />
+							<xsl:text>&amp;details=</xsl:text>
+							<xsl:value-of select="/root/content/new_trip/details" />
+							<xsl:text>&amp;got_car=</xsl:text>
+							<xsl:value-of select="/root/content/new_trip/got_car" />
+						</xsl:attribute>
+						Returresa
+					</a>
+				</p>
 			</div>
 			<table>
 				<tr>
@@ -643,7 +576,7 @@
 									</xsl:choose>
 								</xsl:when>
 								<xsl:when test="/root/meta/errors/error[data/param = $inputid]/message = 'Must select a time in the future'">
-									<p>Du måste ta ett datum i framtiden<a href="http://www.youtube.com/watch?v=H3KCnWdiO1k">Dude, you have no quran</a></p>
+									<p>Du måste ta ett datum i framtiden</p>
 								</xsl:when>
 								<xsl:when test="/root/meta/errors/error[data/param = $inputid]/message = 'Invalid'">
 									<xsl:choose>
@@ -723,7 +656,12 @@
 	</xsl:template>
 
 	<xsl:template name="logo">
-		<div class="highfive">
+		<xsl:param name="type" />
+		<div>
+			<xsl:attribute name="class">
+				<xsl:value-of select="$type"/>
+				highfive
+			</xsl:attribute>
 			<xsl:value-of select="' '" />
 		</div>
 	</xsl:template>
@@ -773,7 +711,11 @@
 
 	<xsl:template name="message">
 		<xsl:param name="button" />
+		<xsl:param name="type" />
 		<div id="messages">
+			<xsl:attribute name="class">
+				<xsl:value-of select="$type"/>
+			</xsl:attribute>
 			<p>
 			<xsl:if test="/root/content/trips/*">
 				Om du inte hittar någon resa härunder kan du spara resan så att <em> andra kan hitta dig</em>.
@@ -791,12 +733,7 @@
 					<xsl:text>&amp;when=</xsl:text>
 					<xsl:value-of select="/root/meta/url_params/when" />
 					<xsl:text>&amp;got_car=</xsl:text>
-					<xsl:if test="/root/meta/url_params/got_car = 1">
-						<xsl:value-of select="0" />
-					</xsl:if>
-					<xsl:if test="/root/meta/url_params/got_car = 0">
-						<xsl:value-of select="1" />
-					</xsl:if>
+					<xsl:value-of select="1 - /root/meta/url_params/got_car" />
 				</xsl:attribute>
 				Spara resa
 			</a>
@@ -804,8 +741,12 @@
 	</xsl:template>
 
 	<xsl:template name="searchresults">
+		<xsl:param name="type" />
 		<xsl:if test="/root/content/trips/*">
 			<div id="searchresults">
+				<xsl:attribute name="class">
+					<xsl:value-of select="$type"/>
+				</xsl:attribute>
 				<h2>
 					<xsl:value-of select="count(/root/content/trips/trip)" />
 					<xsl:if test="count(/root/content/trips/trip) = 1">

@@ -1,2 +1,5 @@
 User-agent: *
+Disallow: /edittrip
+Disallow: /savetrip
 Allow: /
+

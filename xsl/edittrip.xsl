@@ -23,11 +23,20 @@
 				<xsl:call-template name="edit_form" />
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:call-template name="trip_form">
-					<xsl:with-param name="header" select="'Ändra din resa'" />
-					<xsl:with-param name="size" select="'savetrip'" />
-					<xsl:with-param name="function" select="'edittrip'" />
-				</xsl:call-template>
+				<xsl:if test="/root/content/trip_data/got_car = 1 or /root/meta/url_params/got_car = 1">
+					<xsl:call-template name="trip_form">
+						<xsl:with-param name="type" select="'driver'" />
+						<xsl:with-param name="header" select="'Ändra din resa'" />
+						<xsl:with-param name="function" select="'edittrip'" />
+					</xsl:call-template>
+				</xsl:if>
+				<xsl:if test="/root/content/trip_data/got_car = 0 or /root/meta/url_params/got_car = 0">
+					<xsl:call-template name="trip_form">
+						<xsl:with-param name="type" select="'passenger'" />
+						<xsl:with-param name="header" select="'Ändra din resa'" />
+						<xsl:with-param name="function" select="'edittrip'" />
+					</xsl:call-template>
+				</xsl:if>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>

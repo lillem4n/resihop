@@ -32,7 +32,7 @@ $.widget( "ui.geo_autocomplete", {
 
 		mapsensor: false, // see http://code.google.com/apis/maps/documentation/staticmaps/#Sensor
 		minLength: 3, // see http://jqueryui.com/demos/autocomplete/#option-minLength
-		delay: 0, // see http://jqueryui.com/demos/autocomplete/#option-delay
+		delay: 50, // see http://jqueryui.com/demos/autocomplete/#option-delay
 		// callback function to get autocomplete results
 		source: function(_request, _response) {
 			if (_request.term in this.options._cache) {
