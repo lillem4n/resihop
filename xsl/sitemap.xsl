@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-
-
 		<xsl:template match="/" name="sitemap">
 			<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 				<!--Root-->
+<<<<<<< HEAD
 				<url><loc><xsl:value-of select="/root/meta/protocol" /><xsl:text>://</xsl:text><xsl:value-of select="/root/meta/domain" />
 </loc><changefreq>monthly</changefreq><priority>1</priority></url>
 				<url><loc><xsl:value-of select="/root/meta/protocol" /><xsl:text>://</xsl:text><xsl:value-of select="/root/meta/domain" /></loc><changefreq>monthly</changefreq><priority>1</priority></url>
@@ -37,7 +36,7 @@
 						<priority>0.7</priority>
 					</url>
 				</xsl:for-each>
-				
+
 				<!--From-->
 				<xsl:for-each select="/root/content/trips/trip">
 					<url>
@@ -52,7 +51,7 @@
 						<priority>0.5</priority>
 					</url>
 				</xsl:for-each>
-				
+
 				<!--To-->
 				<xsl:for-each select="/root/content/trips/trip">
 					<url>
@@ -84,8 +83,8 @@
 						<priority>0.3</priority>
 					</url>
 				</xsl:for-each>
-				
-			</urlset> 
+
+			</urlset>
 		</xsl:template>
 
 </xsl:stylesheet>
