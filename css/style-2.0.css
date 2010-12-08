@@ -520,13 +520,13 @@ div.savetrip.passenger table, div.savetrip.passenger p.code{
 	margin-right:	-100%;
 }
 
-.passenger .spacer {
+.passenger.search .spacer {
 	margin:	0 0 0 -100%;
 	left:		-16.5em;
 
 }
 
-.passenger  .savetrip .spacer {
+.passenger .savetrip .spacer {
 	margin:	0 -100% 0 0;
 	left:		3.3em;;
 
@@ -553,12 +553,12 @@ div.savetrip.passenger table, div.savetrip.passenger p.code{
 		box-shadow: 1px 1px 2px rgb(102,102,102);
 }
 
- .passenger .error {
+ .passenger.search .error {
 
 	margin:				0 ;
 }
 
- .passenger .savetrip .error {
+ .passenger.savetrip .error {
 
 	margin:				0 0 0 29px ;
 }
@@ -583,13 +583,13 @@ div.savetrip.passenger table, div.savetrip.passenger p.code{
 }
 
 
-.passenger .error p  {
+.passenger.search .error p  {
 	background: 		url(/images/right_arrow.png) no-repeat right 6px;
 	margin:				0;
 	padding:			.7em 2.2em 0 .5em;
 }
 
-.passenger  .savetrip .error p  {
+.passenger.savetrip .error p  {
 	background: 		url(/images/left_arrow.png) no-repeat 0 6px;
 	margin:				0 0 0 -29px;
 	padding:			.7em .5em .2em 2em;
