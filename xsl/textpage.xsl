@@ -18,6 +18,10 @@
 		<p>Vi bygger en site vars mål är att samla ihop alla samåkningar och göra det väldigt enkelt att dels söka i dem och lägga upp nya. Vår supersmarta sökmotor förstår var adresser ligger, vi lanserade nyss v.2 av resihop. Den har typ 50% färre funktioner än den förra versionen! Tillexempel kan man bland annat lägga till nya resor utan att regga konton och sånt. o/\o</p>
 
 		<p>Vidare är all data offentligt tillgänglig via xml (som datorer älskar (omnomnom)) ifall någon vill bygga någor. Kolla bara källkoden och om ni har några frågor kontakta <a href="mailto:hurbel@yahoo.com">lilleman</a>!</p>
+		<br />
+		<br />
+		<img src="/images/eu.gif" />
+		<p style="font-family: 'Tahoma'">Projektet genomförs med ekonomiskt stöd från Europeiska kommissionen. För uppgifterna i denna publikation (meddelande) ansvarar endast upphovsmannen. Europeiska kommissionen tar inget ansvar för hur dessa uppgifter kan komma att användas</p>
 		</div>
 	</xsl:template>
 

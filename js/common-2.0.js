@@ -93,7 +93,7 @@ $(document).ready(function()
         curFocus = this; // log the newly focussed element for the next event
     });
     
-   	$('.from, .to').geo_autocomplete();
+ //  	$('.from, .to').geo_autocomplete();
 });
 
 function autoClear(selector)

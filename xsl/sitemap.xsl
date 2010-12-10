@@ -4,7 +4,6 @@
 		<xsl:template match="/" name="sitemap">
 			<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 				<!--Root-->
-<<<<<<< HEAD
 				<url><loc><xsl:value-of select="/root/meta/protocol" /><xsl:text>://</xsl:text><xsl:value-of select="/root/meta/domain" />
 </loc><changefreq>monthly</changefreq><priority>1</priority></url>
 				<url><loc><xsl:value-of select="/root/meta/protocol" /><xsl:text>://</xsl:text><xsl:value-of select="/root/meta/domain" /></loc><changefreq>monthly</changefreq><priority>1</priority></url>
