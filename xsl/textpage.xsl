@@ -30,17 +30,18 @@
 		<div class="freetext">
 		<p>Snabbaste sättet att tycka är att klicka på tycktill-kappen här till höger.</p>
 		<p>Vill ni prata med oss mer privat eller bara föredrar språk</p>
-		<em>Kristoffer Nolgren</em>
+		<p><em>Kristoffer Nolgren</em></p>
 		<p>Samarbeten med mera</p>
 		<p>070 464 97 97</p>
 		<p>msn: krill@eldsjal.org</p>
 		<p>e-mail: <a href="mailto:kristoffer@nolgren.se">kristoffer@nolgren.se</a></p>
 		<a href="http://www.facebook.com/kristoffer.nolgren">facebook</a>
-		<em>Michael Göransson</em>
+		<p><em>Mikael Göransson</em></p>
 		<p>teknik med mera</p>
 		<p>070 043 56 84</p>
 		<p>icq: 47526873 </p>
 		<p>e-mail: <a href="mailto:hurbel@yahoo.com">hurbel@yahoo.com</a></p>
+		<a href="http://www.facebook.com/lillem4n">facebook</a>
 		</div>
 	</xsl:template>
 
