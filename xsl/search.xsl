@@ -49,7 +49,7 @@
 	<xsl:template match="/root/content">
 		<xsl:choose>
 			<!-- Inga träffar så vi visar spara resa istället -->
-			<xsl:when test="count(/root/content/trips/trip) = 0">
+			<xsl:when test="count(/root/content/trips/trip) = 0 and not(/root/meta/errors)">
 				<xsl:call-template name="trip_form">
 					<xsl:with-param name="header" select="'Spara din resa'" />
 					<xsl:with-param name="size" select="'savetrip'" />
@@ -62,16 +62,19 @@
 				<xsl:call-template name="message">
 					<xsl:with-param name="type" select="'passenger'" />
 				</xsl:call-template>
+				
+				<xsl:call-template name="logo">
+					<xsl:with-param name="type" select="'passenger'" />
+				</xsl:call-template>
+				
 				<xsl:call-template name="trip_form">
 					<xsl:with-param name="header" select="'Jag söker passagerare'" />
 					<xsl:with-param name="type" select="'passenger'" />
 					<xsl:with-param name="size" select="'search'" />
 					<xsl:with-param name="function" select="'search'" />
 				</xsl:call-template>
+
 				<xsl:call-template name="searchresults">
-					<xsl:with-param name="type" select="'passenger'" />
-				</xsl:call-template>
-				<xsl:call-template name="logo">
 					<xsl:with-param name="type" select="'passenger'" />
 				</xsl:call-template>
 			</xsl:if>
@@ -83,13 +86,17 @@
 					<xsl:with-param name="size" select="'search'" />
 					<xsl:with-param name="function" select="'search'" />
 				</xsl:call-template>
+				
+								
+				<xsl:call-template name="logo">
+					<xsl:with-param name="type" select="'driver'" />
+				</xsl:call-template>
+				
 				<xsl:call-template name="message">
 					<xsl:with-param name="type" select="'driver'" />
 				</xsl:call-template>
+
 				<xsl:call-template name="searchresults">
-					<xsl:with-param name="type" select="'driver'" />
-				</xsl:call-template>
-				<xsl:call-template name="logo">
 					<xsl:with-param name="type" select="'driver'" />
 				</xsl:call-template>
 				</xsl:if>
@@ -101,15 +108,19 @@
 					<xsl:with-param name="function" select="'search'" />
 					<xsl:with-param name="type" select="''" />
 				</xsl:call-template>
-				<xsl:call-template name="message">
-					<xsl:with-param name="type" select="''" />
-				</xsl:call-template>
-				<xsl:call-template name="searchresults">
-					<xsl:with-param name="type" select="''" />
-				</xsl:call-template>
+				
 				<xsl:call-template name="logo">
 					<xsl:with-param name="type" select="''" />
 				</xsl:call-template>
+				
+				<xsl:call-template name="message">
+					<xsl:with-param name="type" select="''" />
+				</xsl:call-template>
+				
+				<xsl:call-template name="searchresults">
+					<xsl:with-param name="type" select="''" />
+				</xsl:call-template>
+
 			</xsl:if>
 			</xsl:otherwise>
 		</xsl:choose>

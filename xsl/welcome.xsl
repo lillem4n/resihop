@@ -18,13 +18,15 @@
 			<xsl:with-param name="size" select="'search'" />
 			<xsl:with-param name="function" select="'search'" />
 		</xsl:call-template>
+		
+		<xsl:call-template name="logo" />
+		
 		<xsl:call-template name="trip_form">
 			<xsl:with-param name="header" select="'Jag söker passagerare'" />
 			<xsl:with-param name="type" select="'passenger'" />
 			<xsl:with-param name="size" select="'search'" />
 			<xsl:with-param name="function" select="'search'" />
 		</xsl:call-template>
-		<xsl:call-template name="logo" />
 	</xsl:template>
 
 </xsl:stylesheet>
