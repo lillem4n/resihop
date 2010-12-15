@@ -1,9 +1,10 @@
 $(document).ready(function()
 {	
 
-
+//datmuväljare
 	$('.when').jdPicker();
 
+//sökresultat-interaktion.
 	$('#searchresults tr.generals').hover(
 		function()
 		{
@@ -29,16 +30,24 @@ $(document).ready(function()
 		}
 	)
 
+//lägger till kommentarer i fälten
 	autoFill(".field");
 	$('form').submit(function() {
 		autoClear(".field");
 	});
-	
-	$('tr.details').hide();	
-	$('tr.details').click(
-	function(){
-			$(this).toggle();
+
+//öpnar och stänger sökresultaten.
+	$('tr.details').hide();
+
+	var lastMouseUp = 0, lastMouseDown = 0;
+	$('tr.details').bind('mouseup mousedown', function(e){
+    var ms = new Date().getTime();
+    e.type == 'mousedown' ? lastMouseDown = ms : lastMouseUp = ms;   
+
+    if(e.type != 'mousedown' && (Math.abs(lastMouseUp - lastMouseDown)  < 300))
+		$(this).toggle();
 	});
+	
 	$('tr.generals').click(
 	function(){
 			$(this).next().toggle();
@@ -92,6 +101,12 @@ $(document).ready(function()
 
         curFocus = this; // log the newly focussed element for the next event
     });
+    
+    //Kan bara skicka spar-data en gång!
+    
+    $('.trip').submit(function(){
+	    $('input.button').attr('disabled', 'disabled');
+	});
     
  //  	$('.from, .to').geo_autocomplete();
 });
