@@ -311,7 +311,7 @@ label.regular {
 
 fieldset .button {
 	float:              right;
-	margin:             .9em 1.7em 1.4em 0;
+	margin:             .9em 1.7em 1.4em -1em;
 	cursor:             pointer;
 }
 .hidden{

@@ -104,7 +104,7 @@ $(document).ready(function()
     
     //Kan bara skicka spar-data en gång!
     
-    $('.trip').submit(function(){
+    $('.addtrip').submit(function(){
 	    $('input.button').attr('disabled', 'disabled');
 	});
     
