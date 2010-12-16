@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Controller_Search extends Resihopcontroller
+class Controller_kml extends Resihopcontroller
 {
 
 	public function __construct()
@@ -14,7 +14,7 @@ class Controller_Search extends Resihopcontroller
 	public function action_index()
 	{
 		// Set the name of the template to use
-		$this->xslt_stylesheet = 'search';
+		$this->xslt_stylesheet = 'kml';
 
 		$trips_node = $this->xml_content->appendChild($this->dom->createElement('trips'));
 

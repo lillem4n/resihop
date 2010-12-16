@@ -46,6 +46,7 @@
 						ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 						var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 					})();
+					<xsl:call-template name="goal" />
 				</script>
 			</head>
 			<body>
@@ -123,7 +124,11 @@
 			</xsl:if>
 		</xsl:variable>
 
-		<form class="trip">
+		<form>
+			<xsl:attribute name="class">
+			<xsl:text>trip </xsl:text>
+			<xsl:value-of select="$function" />
+			</xsl:attribute>
 
 			<xsl:attribute name="method">
 				<xsl:choose>
@@ -274,6 +279,21 @@
 					</xsl:choose>
 					</xsl:attribute>
 				</input>
+				<xsl:if test="/root/meta/controller ='welcome'">
+					<a class="button">
+						<xsl:attribute name="href">
+							<xsl:text>/search?got_car=</xsl:text>
+							<xsl:if test="$type = 'driver'">
+								<xsl:text>0</xsl:text>
+							</xsl:if>
+							<xsl:if test="$type = 'passenger'">
+								<xsl:text>1</xsl:text>
+							</xsl:if>
+							
+						</xsl:attribute>
+						<xsl:text>Visa alla</xsl:text>
+					</a>
+				</xsl:if>
 				<xsl:if test="/root/meta/path = 'edittrip'">
 					<a class="button">
 						<xsl:attribute name="href">

@@ -4,6 +4,7 @@
 	<xsl:include href="tpl.template.xsl" />
 
 	<xsl:template name="title">Ett miljövänligt och billigt sätt att resa - Samåkning</xsl:template>
+	<xsl:template name="goal" />
 
 	<xsl:template name="description">Hitta människor för samåkning, ingen registrering, inget krångel! Det är bara att lägga upp resan som passagerare eller förare.</xsl:template>
 

@@ -21,6 +21,16 @@
 			<xsl:value-of select="/root/meta/url_params/when" />
 		</xsl:if>
 	</xsl:template>
+	<xsl:template name="goal">
+		<xsl:choose>
+			<xsl:when test="count(/root/content/trips/trip) = 0 and not(/root/meta/errors)">
+				<xsl:text>pageTracker._trackPageview("/added_trip/try");</xsl:text>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:text>pageTracker._trackPageview("/search/done");</xsl:text>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
 
 	<xsl:template name="description">
 		<xsl:value-of select="'Alla våra resor'" />
