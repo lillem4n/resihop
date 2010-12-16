@@ -276,13 +276,15 @@ Klicka på "ändra resa"'),
 	 */
 	public static function get_trips($q = FALSE, $from = FALSE, $to = FALSE, $when = FALSE, $got_car = FALSE, $trip_ids = FALSE)
 	{
-		$pdo        = Kohana_pdo::instance();
-		$googlemaps = Googlemaps::instance();
+		$pdo        = Kohana_pdo::instance(); // Get database instance, since we are in a static method
+		$googlemaps = Googlemaps::instance(); // Get google maps instance
 
+		// Empty string means FALSE
 		if ($from == '') $from = FALSE;
 		if ($to   == '') $to   = FALSE;
 		if ($when == '') $when = FALSE;
 
+		// Start constructing the SQL
 		$sql = '
 			SELECT
 				trip_id,
@@ -303,20 +305,34 @@ Klicka på "ändra resa"'),
 			WHERE
 				`when` > ' . time();
 
+		// If $got_car is supplied, add it to the WHERE clause
 		if			($got_car === 0) $sql .= ' AND got_car = 0';
 		elseif	($got_car === 1) $sql .= ' AND got_car = 1';
 
+		// If $when is supplied, add it to the WHERE clause
 		if ($when)
 		{
-			$sql .= ' AND `when` >= '.strtotime(date('Y-m-d', $when - 259200)).' AND `when` <= ' . strtotime(date('Y-m-d', $when + 259200));
+			$sql .= ' AND `when` >= '.strtotime(date('Y-m-d', $when - Kohana::config('resihop.time_dif_in_sec_when_searching'))).' AND `when` <= ' . strtotime(date('Y-m-d', $when + Kohana::config('resihop.time_dif_in_sec_when_searching')));
 		}
+
+		// Specific trip ids should be included in the SQL
+		if (is_array($trip_ids))
+		{
+			if (count($trip_ids))  $sql .= ' AND trip_id IN ('.implode(',', $trip_ids).')';
+			else                   return array();
+		}
+
+		// Always sort by when the trip is about to happend
+		$sql .= ' ORDER BY `when`';
 
 		if ($q)
 		{
+			// $q means we search for _eeeverything_ !!! ... Right now that only means "to" and "from" tho...
 			$coords = array();
 			$q_google_result = $googlemaps->get_coordinates_by_address($q);
 			if (array_keys($q_google_result) == array('lat','lon','address'))
 			{
+				// A single hit, add it to $coords for later matching
 				$coords[] = array(
 					'lat' => $q_google_result['lat'],
 					'lon' => $q_google_result['lon'],
@@ -324,6 +340,7 @@ Klicka på "ändra resa"'),
 			}
 			elseif (is_array($q_google_result))
 			{
+				// Several hits. Add them all to $coords for later matching
 				foreach ($q_google_result as $nr => $one_of_many)
 				{
 					$q_google_result_sub = $googlemaps->get_coordinates_by_address($one_of_many);
@@ -339,11 +356,13 @@ Klicka på "ändra resa"'),
 		}
 		else
 		{
+			// $q is not set, search for $to and $from separatly
 			if ($to)
 			{
 				$to_google_result = $googlemaps->get_coordinates_by_address($to);
 				if ($to_google_result == FALSE || array_keys($to_google_result) != array('lat','lon','address'))
 				{
+					// We require one hit only for $to, or this method will fail
 					return FALSE;
 				}
 			}
@@ -353,48 +372,25 @@ Klicka på "ändra resa"'),
 				$from_google_result = $googlemaps->get_coordinates_by_address($from);
 				if ($from_google_result == FALSE || array_keys($from_google_result) != array('lat','lon','address'))
 				{
+					// We require one hit only for $from, or this method will fail
 					return FALSE;
 				}
 			}
 		}
 
-		if ($to && $from)
-		{
-			$search_radius = distance::get_distance($from_google_result['lat'], $from_google_result['lon'], $to_google_result['lat'], $to_google_result['lon']) * (Kohana::config('resihop.percent_of_total_trip_as_radius') / 100);
-
-			if ($search_radius < Kohana::config('resihop.min_search_radius'))
-			{
-				$search_radius = Kohana::config('resihop.min_search_radius');
-			}
-		}
-		else
-		{
-			$search_radius = Kohana::config('resihop.min_search_radius');
-		}
-
-		if (is_array($trip_ids))
-		{
-			if (count($trip_ids))
-			{
-				$sql .= ' AND trip_id IN ('.implode(',', $trip_ids).')';
-			}
-			else
-			{
-				return array();
-			}
-		}
-
-		$sql .= ' ORDER BY `when`';
 		$trips_data = array();
 		$trip_ids   = array();
+		// Fetch all matching trips from the database
 		foreach ($pdo->query($sql, PDO::FETCH_ASSOC) as $row)
 		{
 			if ($to || $from || $q)
 			{
+				// If any of $to, $from or $q is set, we may need to filter out trips that do not match
 				$add_this_trip = FALSE;
 
 				if ($q)
 				{
+					// $q is special, it can be either $to or $from
 					if (isset($coords) && is_array($coords))
 					{
 						foreach ($coords as $coord)
@@ -405,14 +401,16 @@ Klicka på "ändra resa"'),
 								($row['from_lat'] == $coord['lat'] && $row['from_lon'] == $coord['lon'])
 							)
 							{
+								// This is an exact match, add this trip
 								$add_this_trip = TRUE;
 							}
 							elseif
 							(
-								(distance::get_distance($row['to_lat'],   $row['to_lon'],   $coord['lat'], $coord['lon']) <= $search_radius) ||
-								(distance::get_distance($row['from_lat'], $row['from_lon'], $coord['lat'], $coord['lon']) <= $search_radius)
+								(distance::get_distance($row['to_lat'],   $row['to_lon'],   $coord['lat'], $coord['lon']) <= Kohana::config('resihop.min_search_radius')) ||
+								(distance::get_distance($row['from_lat'], $row['from_lon'], $coord['lat'], $coord['lon']) <= Kohana::config('resihop.min_search_radius'))
 							)
 							{
+								// The trip is not an exact match, but is within the radius
 								$add_this_trip = TRUE;
 							}
 						}
@@ -420,12 +418,14 @@ Klicka på "ändra resa"'),
 
 					if ($add_this_trip == FALSE)
 					{
+						// The trip got no hits for the coordinates, what about string match?
 						if
 						(
 							str_replace(strtolower($q), '', strtolower($row['from'])) != strtolower($row['from']) ||
 							str_replace(strtolower($q), '', strtolower($row['to']))   != strtolower($row['to'])
 						)
 						{
+							// Some part of the string matched the strings from the other ones, add this trip
 							$add_this_trip = TRUE;
 						}
 					}
@@ -435,23 +435,39 @@ Klicka på "ändra resa"'),
 				{
 					if ($to && $from)
 					{
+						// Both $to and $from are set, lets find out if we should add this trip
 						if ($row['to_lat'] == $to_google_result['lat'] && $row['to_lon'] == $to_google_result['lon'] && $row['from_lat'] == $from_google_result['lat'] && $row['from_lon'] == $from_google_result['lon'])
 						{
+							// Exact hit! Add this trip!
 							$add_this_trip = TRUE;
 						}
-						elseif (distance::get_distance($row['to_lat'], $row['to_lon'], $to_google_result['lat'], $to_google_result['lon']) <= $search_radius && distance::get_distance($row['from_lat'], $row['from_lon'], $from_google_result['lat'], $from_google_result['lon']) <= $search_radius)
+						else
 						{
-							$add_this_trip = TRUE;
+							// No direct hit, lets see if it's worth it to change the course of the trip to pick someone up
+							$original_distance = distance::get_distance($row['from_lat'], $row['from_lon'], $row['to_lat'], $row['to_lon']);
+
+							$new_distance =
+								distance::get_distance($row['from_lat'], $row['from_lon'], $from_google_result['lat'], $from_google_result['lon']) +
+								distance::get_distance($from_google_result['lat'], $from_google_result['lon'], $to_google_result['lat'], $to_google_result['lon']) +
+								distance::get_distance($to_google_result['lat'], $to_google_result['lon'], $row['to_lat'], $row['to_lon']);
+
+							if (100 * (($new_distance / $original_distance) - 1) < Kohana::config('resihop.percent_extra_travel_distance_acceptable'))
+							{
+								// The new distance is not more than acceptable longer than the original one, add it!
+								$add_this_trip = TRUE;
+							}
 						}
 					}
 					elseif ($to)
 					{
 						if ($row['to_lat'] == $to_google_result['lat'] && $row['to_lon'] == $to_google_result['lon'])
 						{
+							// Exact hit! Add this trip!
 							$add_this_trip = TRUE;
 						}
-						elseif (distance::get_distance($row['to_lat'], $row['to_lon'], $to_google_result['lat'], $to_google_result['lon']) <= $search_radius)
+						elseif (distance::get_distance($row['to_lat'], $row['to_lon'], $to_google_result['lat'], $to_google_result['lon']) <= Kohana::config('resihop.min_search_radius'))
 						{
+							// Its within min radius, add it
 							$add_this_trip = TRUE;
 						}
 					}
@@ -459,10 +475,12 @@ Klicka på "ändra resa"'),
 					{
 						if ($row['from_lat'] == $from_google_result['lat'] && $row['from_lon'] == $from_google_result['lon'])
 						{
+							// Exact hit! Add this trip!
 							$add_this_trip = TRUE;
 						}
-						elseif (distance::get_distance($row['from_lat'], $row['from_lon'], $from_google_result['lat'], $from_google_result['lon']) <= $search_radius)
+						elseif (distance::get_distance($row['from_lat'], $row['from_lon'], $from_google_result['lat'], $from_google_result['lon']) <= Kohana::config('resihop.min_search_radius'))
 						{
+							// Its within min radius, add it
 							$add_this_trip = TRUE;
 						}
 					}
@@ -470,6 +488,7 @@ Klicka på "ändra resa"'),
 			}
 			else
 			{
+				// No filtering, add all trips
 				$add_this_trip = TRUE;
 			}
 
