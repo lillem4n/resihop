@@ -1,19 +1,20 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Controller_kml extends Resihopcontroller
+class Controller_Search extends Resihopcontroller
 {
 
 	public function __construct()
 	{
 		// This is needed for the XSLT setup
 		parent::__construct();
-		$this->force_transform = TRUE;
+		$this->transform = TRUE;
+
 	}
 
 	public function action_index()
 	{
 		// Set the name of the template to use
-		$this->xslt_stylesheet = 'kml';
+		$this->xslt_stylesheet = 'search';
 
 		$trips_node = $this->xml_content->appendChild($this->dom->createElement('trips'));
 

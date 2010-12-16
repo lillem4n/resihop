@@ -7,7 +7,7 @@ class Controller_sitemap extends Resihopcontroller
 	{
 		// This is needed for the XSLT setup
 		parent::__construct();
-		$this->force_transform = TRUE;
+		$this->transform = TRUE;
 	}
 
 	public function action_index()
