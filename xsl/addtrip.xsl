@@ -4,7 +4,7 @@
 	<xsl:include href="tpl.template.xsl" />
 
 	<xsl:template name="title">Samåkning på enkelt vis. Gör naturen och din plånbok en tjänst, Res Ihop!</xsl:template>
-	
+
 	<xsl:template name="description">Hitta människor för samåkning, ingen registrering, inget krångel! Det är bara att lägga upp resan som passagerare eller förare.</xsl:template>
 
 	<xsl:template match="/">
@@ -13,6 +13,8 @@
 
 	<xsl:template match="/root/content">
 		<xsl:choose>
+
+			<!-- Trip is saved -->
 			<xsl:when test="/root/content/new_trip/*">
 				<xsl:if test="/root/meta/url_params/got_car = 1">
 					<xsl:call-template name="trip_saved">
@@ -27,6 +29,8 @@
 					</xsl:call-template>
 				</xsl:if>
 			</xsl:when>
+
+			<!-- Trying to add a trip -->
 			<xsl:otherwise>
 				<xsl:if test="/root/meta/url_params/got_car = 1">
 					<xsl:call-template name="trip_form">
@@ -50,6 +54,7 @@
 					</xsl:call-template>
 				</xsl:if>
 			</xsl:otherwise>
+
 		</xsl:choose>
 	</xsl:template>
 

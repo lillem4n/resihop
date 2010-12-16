@@ -278,9 +278,9 @@ div.savetrip table tr td.last{
 }
 
 
-fieldset.passenger, div.passenger fieldset {
-	margin-left:            8%;
-	margin-right:			0;
+fieldset.driver, div.driver fieldset {
+	margin-left:        8%;
+	margin-right:       0;
 }
 
 label.regular {
@@ -312,6 +312,7 @@ label.regular {
 fieldset .button {
 	float:              right;
 	margin:             .9em 1.7em 1.4em 0;
+	cursor:             pointer;
 }
 .hidden{
 	display:	none;
@@ -339,7 +340,8 @@ fieldset .button {
 .savetrip #radiobuttons {
 	float:              left;
 	clear:              left;
-	margin:             0 0 0 5.9em;
+/*	margin:             0 0 0 5.9em;*/
+	margin:             0 0 0 3em;
 	padding:            0;
 }
 
@@ -629,7 +631,7 @@ div.savetrip.passenger table, div.savetrip.passenger p.code{
 
 #messages {
 	float:				left;
-	margin: 			8.4% 0 0 8%;
+	margin: 			8.4% 4% 0 4%;
 	width:				41%;
 }
 
@@ -782,7 +784,7 @@ div.savetrip.passenger table, div.savetrip.passenger p.code{
 	margin:             	2em auto 2em auto;
 	max-width:        	  	66em;
 	border-radius:			1em;
-	-moz-border-radius: 	1em;	
+	-moz-border-radius: 	1em;
 }
 
 #footer ul {
@@ -823,9 +825,9 @@ img#kundo_feedback {
 /*------------- geo_autocomplete -----------------*/
 
 
-.ui-autocomplete { 
+.ui-autocomplete {
 	width:			16em;
-	margin-bottom:	-100%;		
+	margin-bottom:	-100%;
 }
 
 .ui-autocomplete li {
