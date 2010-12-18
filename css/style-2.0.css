@@ -295,7 +295,7 @@ label.regular {
 .field {
 	padding:            .3em;
 	font-size:          1.1em;
-	width:              62%;
+	width:              67%;
 	margin:             0 0 1.8em 0;
 	clear:              right;
 }
@@ -390,7 +390,7 @@ fieldset.savetrip, div.savetrip {
 }
 
 .savetrip .field {
-	width:              63%;
+	width:              67%;
 }
 
 .when {
@@ -524,13 +524,13 @@ div.savetrip.passenger table, div.savetrip.passenger p.code{
 	margin-right:	-100%;
 }
 
-.passenger.search .spacer {
+.driver.search .spacer {
 	margin:	0 0 0 -100%;
-	left:		-16.5em;
+	left:		-64%;
 
 }
 
-.passenger .savetrip .spacer {
+.driver .savetrip .spacer {
 	margin:	0 -100% 0 0;
 	left:		3.3em;;
 
@@ -557,12 +557,12 @@ div.savetrip.passenger table, div.savetrip.passenger p.code{
 		box-shadow: 1px 1px 2px rgb(102,102,102);
 }
 
- .passenger.search .error {
+ .driver.search .error {
 
 	margin:				0 ;
 }
 
- .passenger.savetrip .error {
+ .driver.savetrip .error {
 
 	margin:				0 0 0 29px ;
 }
@@ -587,13 +587,13 @@ div.savetrip.passenger table, div.savetrip.passenger p.code{
 }
 
 
-.passenger.search .error p  {
+.driver.search .error p  {
 	background: 		url(/images/right_arrow.png) no-repeat right 6px;
 	margin:				0;
 	padding:			.7em 2.2em 0 .5em;
 }
 
-.passenger.savetrip .error p  {
+.driver.savetrip .error p  {
 	background: 		url(/images/left_arrow.png) no-repeat 0 6px;
 	margin:				0 0 0 -29px;
 	padding:			.7em .5em .2em 2em;
@@ -737,6 +737,21 @@ div.savetrip.passenger table, div.savetrip.passenger p.code{
 #searchresults tr.details td {
 	border-top:         none;
 	padding-top:        0;
+}
+
+/*-------- show_all --------*/
+.show_all {
+	font-size: 1.1em;
+	padding-top:	1em;
+}
+
+.show_all_driver {
+	float: left;
+	color: rgb(79,112,52);
+}
+
+.show_all_passenger {
+	float: right;
 }
 
 /*------------- freetext -----------------*/
