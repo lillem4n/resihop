@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
 	<xsl:include href="tpl.template.xsl" />
 
 	<xsl:template name="title">
@@ -24,10 +25,10 @@
 	<xsl:template name="goal">
 		<xsl:choose>
 			<xsl:when test="count(/root/content/trips/trip) = 0 and not(/root/meta/errors)">
-				<xsl:text>pageTracker._trackPageview("/added_trip/try");</xsl:text>
+				<xsl:text>_gaq.push(['_trackPageview', '/added_trip/try/force']);</xsl:text>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:text>pageTracker._trackPageview("/search/done");</xsl:text>
+				<xsl:text>_gaq.push(['_trackPageview', '/search/done']);</xsl:text>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>

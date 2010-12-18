@@ -7,10 +7,10 @@
 	<xsl:template name="goal">
 	<xsl:choose>
 		<xsl:when test="/root/content/new_trip/*">
-			<xsl:text>pageTracker._trackPageview("/added_trip/done");</xsl:text>
+			<xsl:text>_gaq.push(['_trackPageview', '/added_trip/done']);</xsl:text>
 		</xsl:when>
 		<xsl:otherwise>
-			<xsl:text>pageTracker._trackPageview("/added_trip/try");</xsl:text>
+			<xsl:text>_gaq.push(['_trackPageview', '/added_trip/try']);</xsl:text>
 		</xsl:otherwise>
 	</xsl:choose>
 	</xsl:template>

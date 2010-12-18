@@ -28,6 +28,10 @@
 			<xsl:with-param name="size" select="'search'" />
 			<xsl:with-param name="function" select="'search'" />
 		</xsl:call-template>
+		
+		<xsl:call-template name="show_all" />
+
 	</xsl:template>
+
 
 </xsl:stylesheet>

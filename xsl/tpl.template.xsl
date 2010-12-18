@@ -40,13 +40,14 @@
 					var _gaq = _gaq || [];
 					_gaq.push(['_setAccount', 'UA-6975218-3']);
 					_gaq.push(['_trackPageview']);
+					<xsl:call-template name="goal" />
+
 
 					(function() {
 						var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
 						ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 						var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 					})();
-					<xsl:call-template name="goal" />
 				</script>
 			</head>
 			<body>
@@ -225,6 +226,9 @@
 					</div>
 				</xsl:if>
 				<div id="radiobuttons">
+					<xsl:if test="(/root/meta/controller = 'welcome') or not($type = '')">
+						<xsl:attribute name="class">hidden</xsl:attribute>
+					</xsl:if>
 					<xsl:if test="$function = 'addtrip' or $function = 'edittrip'">
 						<input id="car" type="radio" value="0" name="got_car">
 							<xsl:if test="$type = 'passenger'">
@@ -241,9 +245,7 @@
 					</xsl:if>
 
 					<xsl:if test="not($function = 'addtrip' or $function = 'edittrip')">
-						<xsl:if test="(/root/meta/controller = 'welcome') or not($type = '')">
-							<xsl:attribute name="class">hidden</xsl:attribute>
-						</xsl:if>
+
 						<input id="car" type="radio" value="1" name="got_car">
 							<xsl:if test="$type = 'passenger'">
 								<xsl:attribute name="checked">checked</xsl:attribute>
@@ -279,21 +281,6 @@
 					</xsl:choose>
 					</xsl:attribute>
 				</input>
-				<xsl:if test="/root/meta/controller ='welcome'">
-					<a class="button">
-						<xsl:attribute name="href">
-							<xsl:text>/search?got_car=</xsl:text>
-							<xsl:if test="$type = 'driver'">
-								<xsl:text>0</xsl:text>
-							</xsl:if>
-							<xsl:if test="$type = 'passenger'">
-								<xsl:text>1</xsl:text>
-							</xsl:if>
-							
-						</xsl:attribute>
-						<xsl:text>Visa alla</xsl:text>
-					</a>
-				</xsl:if>
 				<xsl:if test="/root/meta/path = 'edittrip'">
 					<a class="button">
 						<xsl:attribute name="href">
@@ -304,7 +291,7 @@
 					</a>
 				</xsl:if>
 			</fieldset>
-		</form>
+		</form>		
 	</xsl:template>
 
 	<xsl:template name="trip_saved">
@@ -536,7 +523,7 @@
 								<xsl:when test="/root/meta/errors/error[data/param = $inputid]/message = 'Invalid format'">
 									<xsl:choose>
 										<xsl:when test="$inputid = 'when'">
-											<p>Ange ett datum enligt formatet YYYY-MM-DD (Det är en standard, vi gillar standarder!)</p>
+											<p>Ange ett datum enligt formatet ÅÅÅÅ-MM-DD (Det är en standard, vi gillar standarder!)</p>
 										</xsl:when>
 										<xsl:when test="$inputid = 'phone'">
 											<p>Det där verkar inte vara ett telefonnummer, håll dig till siffror!</p>
@@ -632,6 +619,11 @@
 			</xsl:attribute>
 			<xsl:value-of select="' '" />
 		</div>
+	</xsl:template>
+	
+	<xsl:template name="show_all">
+		<a class="show_all show_all_driver" href="/search?got_car=1">Visa alla som kör bil</a>
+		<a class="show_all show_all_passenger" href="/search?got_car=0">Visa alla som vill ha skjuts</a>
 	</xsl:template>
 
 	<xsl:template name="edit_form">

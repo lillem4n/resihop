@@ -102,6 +102,13 @@ $(document).ready(function()
         curFocus = this; // log the newly focussed element for the next event
     });
     
+	$('.field').bind('keydown',function(e){ 
+		curFocus = this; // log the newly focussed element for the next event
+		if(e.which==9){
+            $('.' + $(curFocus).attr("id")).removeClass("visible"); // take action based on the blurred element
+        }
+	});
+    
     //Kan bara skicka spar-data en gång!
     
     $('.addtrip').submit(function(){
