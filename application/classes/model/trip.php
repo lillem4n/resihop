@@ -297,7 +297,6 @@ Klicka på "ändra resa"'),
 				details,
 				inserted,
 				name,
-				email,
 				phone,
 				(SELECT address FROM google_cache WHERE `lon` = from_lon AND lat = from_lat LIMIT 1) AS `from`,
 				(SELECT address FROM google_cache WHERE `lon` = to_lon AND lat = to_lat LIMIT 1) AS `to`
