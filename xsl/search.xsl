@@ -4,7 +4,7 @@
 	<xsl:include href="tpl.template.xsl" />
 
 	<xsl:template name="title">
-		<xsl:value-of select="'Samåkningar '" />
+		<xsl:value-of select="'Samåkning '" />
 		<xsl:if test="/root/meta/url_params/q and not(/root/meta/url_params/q = '')" >
 			<xsl:value-of select="' till eller från '" />
 			<xsl:value-of select="/root/meta/url_params/q" />
@@ -20,6 +20,12 @@
 		<xsl:if test="/root/meta/url_params/when and not(/root/meta/url_params/when = '')" >
 			<xsl:value-of select="' den '" />
 			<xsl:value-of select="/root/meta/url_params/when" />
+		</xsl:if>
+		<xsl:if test="/root/meta/url_params/got_car = '1'" >
+			<xsl:value-of select="' med bil.'" />
+		</xsl:if>
+		<xsl:if test="/root/meta/url_params/got_car = '0'" >
+			<xsl:value-of select="' som söker bil.'" />
 		</xsl:if>
 	</xsl:template>
 	<xsl:template name="goal">
