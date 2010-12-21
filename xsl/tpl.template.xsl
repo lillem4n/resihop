@@ -29,6 +29,115 @@
 						<xsl:text>.css</xsl:text>
 					</xsl:attribute>
 				</link>
+				<xsl:if test="/root/meta/controller = 'search'">
+					<xsl:if test="/root/meta/url_params/from and not(/root/meta/url_params/from = '') and /root/meta/url_params/to and not(/root/meta/url_params/to = '') and /root/meta/url_params/when and not(/root/meta/url_params/when = '')" >
+	
+						<link rel="alternate" type="application/rss+xml">
+							<xsl:attribute name="href">
+								<xsl:value-of select="/root/meta/protocol" />
+								<xsl:value-of select="'://'" />
+								<xsl:value-of select="/root/meta/domain" />
+								<xsl:value-of select="/root/meta/base" />
+								<xsl:value-of select="'rss?'" />
+								<xsl:for-each select="/root/meta/url_params/*">
+									<xsl:value-of select="name(.)" />
+									<xsl:text>=</xsl:text>
+									<xsl:value-of select="." />
+									<xsl:text>&amp;</xsl:text>
+								</xsl:for-each>
+							</xsl:attribute>
+							<xsl:attribute name="title">
+								<xsl:value-of select="'Från '" />
+								<xsl:value-of select="/root/meta/url_params/from" />
+								<xsl:value-of select="' till '" />
+								<xsl:value-of select="/root/meta/url_params/to" />
+								<xsl:value-of select="', '" />
+								<xsl:value-of select="/root/meta/url_params/when" />
+								<xsl:if test="/root/meta/url_params/got_car = '0'" >
+									<xsl:value-of select="' med bil.'" />
+								</xsl:if>
+								<xsl:if test="/root/meta/url_params/got_car = '0'" >
+									<xsl:value-of select="' som söker bil.'" />
+								</xsl:if>
+							</xsl:attribute>
+						</link>
+					</xsl:if>
+					
+					<xsl:if test="/root/meta/url_params/from and not(/root/meta/url_params/from = '') and /root/meta/url_params/when and not(/root/meta/url_params/when = '')" >
+						<link rel="alternate" type="application/rss+xml">
+							<xsl:attribute name="href">
+								<xsl:value-of select="/root/meta/protocol" />
+								<xsl:value-of select="'://'" />
+								<xsl:value-of select="/root/meta/domain" />
+								<xsl:value-of select="/root/meta/base" />
+								<xsl:value-of select="'rss?from='" />
+								<xsl:value-of select="/root/meta/url_params/from" />
+								<xsl:value-of select="'&amp;when='" />
+								<xsl:value-of select="/root/meta/url_params/when" />
+								<xsl:value-of select="'&amp;got_car='" />
+								<xsl:value-of select="/root/meta/url_params/got_car" />
+							</xsl:attribute>
+							<xsl:attribute name="title">
+								<xsl:value-of select="'Alla resor från '" />
+								<xsl:value-of select="/root/meta/url_params/from" />
+								<xsl:value-of select="', '" />
+								<xsl:value-of select="/root/meta/url_params/when" />
+								<xsl:if test="/root/meta/url_params/got_car = '0'" >
+									<xsl:value-of select="' med bil.'" />
+								</xsl:if>
+								<xsl:if test="/root/meta/url_params/got_car = '0'" >
+									<xsl:value-of select="' som söker bil.'" />
+								</xsl:if>
+							</xsl:attribute>
+						</link>
+					</xsl:if>
+					
+					<xsl:if test="/root/meta/url_params/from and not(/root/meta/url_params/from = '')" >
+						<link rel="alternate" type="application/rss+xml">
+							<xsl:attribute name="href">
+								<xsl:value-of select="/root/meta/protocol" />
+								<xsl:value-of select="'://'" />
+								<xsl:value-of select="/root/meta/domain" />
+								<xsl:value-of select="/root/meta/base" />
+								<xsl:value-of select="'rss?from='" />
+								<xsl:value-of select="/root/meta/url_params/from" />
+							</xsl:attribute>
+							
+							<xsl:attribute name="title">
+								<xsl:value-of select="'Alla resor från '" />
+								<xsl:value-of select="/root/meta/url_params/from" />
+							</xsl:attribute>
+						</link>
+					</xsl:if>
+					
+					<xsl:if test="/root/meta/url_params/to and not(/root/meta/url_params/to = '')" >
+						<link rel="alternate" type="application/rss+xml">
+							<xsl:attribute name="href">
+								<xsl:value-of select="/root/meta/protocol" />
+								<xsl:value-of select="'://'" />
+								<xsl:value-of select="/root/meta/domain" />
+								<xsl:value-of select="/root/meta/base" />
+								<xsl:value-of select="'rss?to='" />
+								<xsl:value-of select="/root/meta/url_params/to" />
+							</xsl:attribute>
+							
+							<xsl:attribute name="title">
+								<xsl:value-of select="'Alla resor till '" />
+								<xsl:value-of select="/root/meta/url_params/to" />
+							</xsl:attribute>
+						</link>
+					</xsl:if>
+
+					<link rel="alternate" type="application/rss+xml" title="Alla resor">
+						<xsl:attribute name="href">
+							<xsl:value-of select="/root/meta/protocol" />
+							<xsl:value-of select="'://'" />
+							<xsl:value-of select="/root/meta/domain" />
+							<xsl:value-of select="/root/meta/base" />
+							<xsl:value-of select="'rss'" />
+						</xsl:attribute>
+					</link>
+				</xsl:if>
 				<base href="http://{root/meta/domain}/" />
 				<link rel="icon" type="image/png" href="/favicon.png" />
 				<link rel="search" type="application/opensearchdescription+xml" href="quicksearch.xml" title="Resihop.nu" />

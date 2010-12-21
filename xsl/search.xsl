@@ -4,18 +4,28 @@
 	<xsl:include href="tpl.template.xsl" />
 
 	<xsl:template name="title">
-		<xsl:value-of select="'Samåkning '" />
+		<xsl:value-of select="'Resihop - Samåkning '" />
 		<xsl:if test="/root/meta/url_params/q and not(/root/meta/url_params/q = '')" >
 			<xsl:value-of select="' till eller från '" />
 			<xsl:value-of select="/root/meta/url_params/q" />
 		</xsl:if>
 		<xsl:if test="/root/meta/url_params/from and not(/root/meta/url_params/from = '')" >
 			<xsl:value-of select="' från '" />
-			<xsl:value-of select="/root/meta/url_params/from" />
+				<xsl:if test="substring(from,string-length(from) - 7,8) = ', Sweden'">
+					<xsl:value-of select="substring(from, 0, string-length(from) - 7)" />
+				</xsl:if>
+				<xsl:if test="substring(from,string-length(from) - 7,8) != ', Sweden'">
+					<xsl:value-of select="from"/>
+				</xsl:if>
 		</xsl:if>
 		<xsl:if test="/root/meta/url_params/to and not(/root/meta/url_params/to = '')" >
 			<xsl:value-of select="' till '" />
-			<xsl:value-of select="/root/meta/url_params/to" />
+			<xsl:if test="substring(to,string-length(to) - 7,8) = ', Sweden'">
+				<xsl:value-of select="substring(to, 0, string-length(to) - 7)" />
+			</xsl:if>
+			<xsl:if test="substring(to,string-length(to) - 7,8) != ', Sweden'">
+				<xsl:value-of select="to"/>
+			</xsl:if>
 		</xsl:if>
 		<xsl:if test="/root/meta/url_params/when and not(/root/meta/url_params/when = '')" >
 			<xsl:value-of select="' den '" />
