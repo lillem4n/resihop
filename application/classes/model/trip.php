@@ -450,10 +450,19 @@ Klicka på "ändra resa"'),
 								distance::get_distance($from_google_result['lat'], $from_google_result['lon'], $to_google_result['lat'], $to_google_result['lon']) +
 								distance::get_distance($to_google_result['lat'], $to_google_result['lon'], $row['to_lat'], $row['to_lon']);
 
-							if (100 * (($new_distance / $original_distance) - 1) < Kohana::config('resihop.percent_extra_travel_distance_acceptable'))
+							if ($new_distance == 0 || $original_distance == 0)
 							{
-								// The new distance is not more than acceptable longer than the original one, add it!
+								// This should not happend... if it is, add this trip since we dont know the basic data needed to calculate the distances
 								$add_this_trip = TRUE;
+							}
+							else
+							{
+								// We have both original and new distance, lets calc if they're less than acceptable in difference
+								if (100 * (($new_distance / $original_distance) - 1) < Kohana::config('resihop.percent_extra_travel_distance_acceptable'))
+								{
+									// The new distance is not more than acceptable longer than the original one, add it!
+									$add_this_trip = TRUE;
+								}
 							}
 						}
 					}
