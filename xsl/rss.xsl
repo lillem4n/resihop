@@ -19,6 +19,7 @@
 							<xsl:if test="substring(to,string-length(from) - 7,8) != ', Sweden'">
 								<xsl:value-of select="from"/>
 							</xsl:if>
+						</xsl:if>
 						<xsl:if test="/root/meta/url_params/to and not(/root/meta/url_params/to = '')" >
 							<xsl:value-of select="' till '" />
 							<xsl:if test="substring(to,string-length(to) - 7,8) = ', Sweden'">
@@ -83,7 +84,7 @@
 				</image>
 				<!--From and to-->
 				<xsl:for-each select="/root/content/trips/trip">
-			      <xsl:sort select="inserted" data-type="number"/>
+			      <xsl:sort select="inserted" order="descending" data-type="number"/>
 					<item>
 						<title>
 							<xsl:value-of select="'Resihop - Samåkning '" />

@@ -83,7 +83,7 @@
 				</image>
 				<!--From and to-->
 				<xsl:for-each select="/root/content/trips/trip">
-			      <xsl:sort select="inserted" data-type="number"/>
+			      <xsl:sort select="inserted" order="descending" data-type="number"/>
 					<item>
 						<title>
 							<xsl:if test="got_car = '1'" >
