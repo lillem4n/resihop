@@ -297,7 +297,7 @@
 					<xsl:call-template name="inputfield">
 						<xsl:with-param name="inputid" select="'when'" />
 						<xsl:with-param name="inputlabel" select="'När'" />
-						<xsl:with-param name="inputtitle" select="'YYYY-MM-DD'" />
+						<xsl:with-param name="inputtitle" select="'ÅÅÅÅ-MM-DD'" />
 						<xsl:with-param name="value" select="/root/meta/url_params/when" />
 					</xsl:call-template>
 				</div>
@@ -310,6 +310,8 @@
 						<xsl:call-template name="inputfield">
 							<xsl:with-param name="inputid" select="'email'" />
 							<xsl:with-param name="inputlabel" select="'E-post'" />
+							<xsl:with-param name="inputtitle" select="'Visas ej.'" />
+
 						</xsl:call-template>
 						<xsl:call-template name="inputfield">
 							<xsl:with-param name="inputid" select="'phone'" />

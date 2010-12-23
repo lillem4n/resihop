@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom" >
 
 
-		<xsl:template match="/" name="sitemap">
+		<xsl:template match="/" name="rss">
 			<rss version="2.0">
 			<channel>
 				<title>
@@ -13,8 +13,12 @@
 						</xsl:if>
 						<xsl:if test="/root/meta/url_params/from and not(/root/meta/url_params/from = '')" >
 							<xsl:value-of select="' från '" />
-							<xsl:value-of select="/root/meta/url_params/from" />
-						</xsl:if>
+							<xsl:if test="substring(from,string-length(from) - 7,8) = ', Sweden'">
+								<xsl:value-of select="substring(from, 0, string-length(from) - 7)" />
+							</xsl:if>
+							<xsl:if test="substring(to,string-length(from) - 7,8) != ', Sweden'">
+								<xsl:value-of select="from"/>
+							</xsl:if>
 						<xsl:if test="/root/meta/url_params/to and not(/root/meta/url_params/to = '')" >
 							<xsl:value-of select="' till '" />
 							<xsl:if test="substring(to,string-length(to) - 7,8) = ', Sweden'">
@@ -82,29 +86,52 @@
 			      <xsl:sort select="inserted" data-type="number"/>
 					<item>
 						<title>
-							<xsl:text>Samåkning från </xsl:text>
-								<xsl:if test="substring(from,string-length(from) - 7,8) = ', Sweden'">
-									<xsl:value-of select="substring(from, 0, string-length(from) - 7)" />
+							<xsl:value-of select="'Resihop - Samåkning '" />
+								<xsl:if test="/root/meta/url_params/q and not(/root/meta/url_params/q = '')" >
+									<xsl:value-of select="' till eller från '" />
+									<xsl:value-of select="/root/meta/url_params/q" />
 								</xsl:if>
-								<xsl:if test="substring(from,string-length(from) - 7,8) != ', Sweden'">
-									<xsl:value-of select="from"/>
+								<xsl:if test="/root/meta/url_params/from and not(/root/meta/url_params/from = '')" >
+									<xsl:value-of select="' från '" />
+									<xsl:if test="substring(to,string-length(from) - 7,8) = ', Sweden'">
+										<xsl:value-of select="substring(from, 0, string-length(from) - 7)" />
+									</xsl:if>
+									<xsl:if test="substring(to,string-length(from) - 7,8) != ', Sweden'">
+										<xsl:value-of select="from"/>
+									</xsl:if>
 								</xsl:if>
-							<xsl:text> till </xsl:text>
-								<xsl:if test="substring(to,string-length(to) - 7,8) = ', Sweden'">
-									<xsl:value-of select="substring(to, 0, string-length(to) - 7)" />
+								<xsl:if test="/root/meta/url_params/to and not(/root/meta/url_params/to = '')" >
+									<xsl:value-of select="' till '" />
+									<xsl:if test="substring(to,string-length(to) - 7,8) = ', Sweden'">
+										<xsl:value-of select="substring(to, 0, string-length(to) - 7)" />
+									</xsl:if>
+									<xsl:if test="substring(to,string-length(to) - 7,8) != ', Sweden'">
+										<xsl:value-of select="to"/>
+									</xsl:if>
 								</xsl:if>
-								<xsl:if test="substring(to,string-length(to) - 7,8) != ', Sweden'">
-									<xsl:value-of select="to"/>
+								<xsl:if test="/root/meta/url_params/when and not(/root/meta/url_params/when = '')" >
+									<xsl:value-of select="' den '" />
+									<xsl:value-of select="substring(/root/meta/url_params/when, 0, 10)" />
 								</xsl:if>
-							<xsl:text> den </xsl:text>
-							<xsl:value-of select="substring(when_iso, 0, string-length(when_iso) - 5)"/>
-							<xsl:if test="got_car = '1'" >
-							<xsl:value-of select="', söker passagerare.'" />
-						</xsl:if>
-						<xsl:if test="got_car = '0'" >
-							<xsl:value-of select="', söker bilplats.'" />
-						</xsl:if>
-						</title>
+								<xsl:if test="/root/meta/url_params/got_car = '1'" >
+									<xsl:value-of select="' med bil.'" />
+								</xsl:if>
+								<xsl:if test="/root/meta/url_params/got_car = '0'" >
+									<xsl:value-of select="' som söker bil.'" />
+								</xsl:if>
+							</title>
+						<link>
+								<xsl:value-of select="/root/meta/protocol" />
+								<xsl:value-of select="'://'" />
+								<xsl:value-of select="/root/meta/domain" />
+								<xsl:value-of select="/root/meta/base" />
+								<xsl:value-of select="'search?from='" />
+								<xsl:value-of select="from" />
+								<xsl:value-of select="'to='" />
+								<xsl:value-of select="to" />
+								<xsl:value-of select="'got_car='" />
+								<xsl:value-of select="got_car" />
+						</link>
 						<category>
 							<xsl:value-of select="from"/>
 							<xsl:text> </xsl:text>
