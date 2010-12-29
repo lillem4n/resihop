@@ -873,21 +873,14 @@
 									</xsl:if>
 								</xsl:attribute>
 								<td>
-									<xsl:if test="substring(from,string-length(from) - 7,8) = ', Sweden'">
-										<xsl:value-of select="substring(from, 0, string-length(from) - 7)" />
-									</xsl:if>
-									<xsl:if test="substring(from,string-length(from) - 7,8) != ', Sweden'">
-										<xsl:value-of select="from"/>
-									</xsl:if>
+									<xsl:call-template name="place_cleaner">
+										<xsl:with-param name="place"   select="from" />
+									</xsl:call-template>
 								</td>
 								<td>
-									<xsl:if test="substring(to,string-length(to) - 7,8) = ', Sweden'">
-										<xsl:value-of select="substring(to, 0, string-length(to) - 7)" />
-									</xsl:if>
-									<xsl:if test="substring(to,string-length(to) - 7,8) != ', Sweden'">
-										<xsl:value-of select="to"/>
-									</xsl:if>
-								</td>
+									<xsl:call-template name="place_cleaner">
+										<xsl:with-param name="place"   select="to" />
+									</xsl:call-template>								</td>
 								<td>
 									<xsl:value-of select="substring(when_iso, 0, 11)" />
 								</td>
@@ -919,7 +912,28 @@
 				</table>
 			</div>
 		</xsl:if>
-
+	</xsl:template>
+	
+	<xsl:template name="place_cleaner">
+		<xsl:param name="place" />
+		<xsl:choose>
+			<xsl:when test="substring($place,string-length($place) - 14,15) = ' County, Sweden'">
+				<xsl:value-of select="substring($place, 0, string-length($place) - 14)" />
+			</xsl:when>
+			
+			<xsl:when test="substring($place,string-length($place) - 20,21) = ' Municipality, Sweden'">
+				<xsl:value-of select="substring($place, 0, string-length($place) - 20)" />
+			</xsl:when>
+			
+			<xsl:when test="substring($place,string-length($place) - 7,8) = ', Sweden'">
+				<xsl:value-of select="substring($place, 0, string-length($place) - 7)" />
+			</xsl:when>
+			
+			
+			<xsl:otherwise>
+				<xsl:value-of select="$place"/>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<!-- convert line feed to <br /> -->
