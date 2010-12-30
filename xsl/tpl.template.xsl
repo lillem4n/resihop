@@ -799,8 +799,11 @@
 					<xsl:value-of select="/root/meta/url_params/to" />
 					<xsl:text>&amp;when=</xsl:text>
 					<xsl:value-of select="/root/meta/url_params/when" />
-					<xsl:text>&amp;got_car=</xsl:text>
-					<xsl:value-of select="1 - /root/meta/url_params/got_car" />
+					<xsl:if test="/root/meta/url_params/got_car">
+						<xsl:text>&amp;got_car=</xsl:text>
+						<xsl:value-of select="1 - /root/meta/url_params/got_car" />
+					</xsl:if>
+
 				</xsl:attribute>
 				<xsl:text>Spara resa</xsl:text>
 			</a>
@@ -933,6 +936,33 @@
 			<xsl:otherwise>
 				<xsl:value-of select="$place"/>
 			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	
+		<xsl:template name="get_weekday">
+		<xsl:param name="when" />
+		<xsl:choose>
+			<xsl:when test="(floor($when div 86400))mod 7 = 3">
+				<xsl:text>måndag</xsl:text>
+			</xsl:when>
+			<xsl:when test="(floor($when div 86400))mod 7 = 4">
+				<xsl:text>tisdag</xsl:text>
+			</xsl:when>
+			<xsl:when test="(floor($when div 86400))mod 7 = 5">
+				<xsl:text>onsdag</xsl:text>
+			</xsl:when>
+			<xsl:when test="(floor($when div 86400))mod 7 = 6">
+				<xsl:text>torsdag</xsl:text>
+			</xsl:when>
+			<xsl:when test="(floor($when div 86400))mod 7 = 0">
+				<xsl:text>fredag</xsl:text>
+			</xsl:when>
+			<xsl:when test="(floor($when div 86400))mod 7 = 1">
+				<xsl:text>lördag</xsl:text>
+			</xsl:when>
+			<xsl:when test="(floor($when div 86400))mod 7 = 2">
+				<xsl:text>söndag</xsl:text>
+			</xsl:when>
 		</xsl:choose>
 	</xsl:template>
 

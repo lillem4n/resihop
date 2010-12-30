@@ -199,14 +199,6 @@ Klicka på "ändra resa"'),
 				{
 					return date('Y-m-d H:i', $this->when);
 				}
-				if ($field == 'when_rel')
-				{
-					return (floor($this->when/60/60/24-time()/60/60/24));
-				}
-				if ($field == 'when_weekday')
-				{
-					return date('N', $this->when);
-				}
 				else
 				{
 					return $this->$field;
@@ -229,8 +221,6 @@ Klicka på "ändra resa"'),
 				'to_lon'       => $this->to_lon,
 				'when'         => $this->when,
 				'when_iso'     => date('Y-m-d H:i', $this->when),
-				'when_rel'     => (floor($this->when/60/60/24-time()/60/60/24)),
-				'when_weekday' => date('Y-m-d H:i', $this->when),
 				'details'      => $this->details,
 				'got_car'      => $this->got_car,
 				'inserted'     => $this->inserted,
@@ -514,8 +504,6 @@ Klicka på "ändra resa"'),
 				$trip_ids[]                              = $row['trip_id'];
 				$trips_data[$row['trip_id']]             = $row;
 				$trips_data[$row['trip_id']]['when_iso'] = date('Y-m-d H:i', $row['when']);
-				$trips_data[$row['trip_id']]['when_rel'] = floor($row['when']/60/60/24-time()/60/60/24);
-				$trips_data[$row['trip_id']]['when_weekday'] = date('N', $row['when']);
 			}
 		}
 

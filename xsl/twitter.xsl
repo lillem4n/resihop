@@ -98,22 +98,22 @@
 									</xsl:call-template>
 							<xsl:text> </xsl:text>
 							<xsl:choose>
-								<xsl:when test="when_rel = 0">
+								<xsl:when test="when - /root/meta/current_timestamp &lt; 86400">
 									<xsl:text> imorgon</xsl:text>
 								</xsl:when>
-								<xsl:when test="when_rel = 1">
+								<xsl:when test="when - /root/meta/current_timestamp &lt; 172800">
 									<xsl:text> i övermorgon</xsl:text>
 								</xsl:when>
-								<xsl:when test="when_rel &lt; 5">
+								<xsl:when test="when - /root/meta/current_timestamp &lt; 432000">
 									<xsl:text> på </xsl:text>
 									<xsl:call-template name="get_weekday">
-										<xsl:with-param name="weekday"   select="when_weekday" />
+										<xsl:with-param name="when"   select="when" />
 									</xsl:call-template>
 								</xsl:when>
-								<xsl:when test="when_rel &lt; 12">
+								<xsl:when test="when - /root/meta/current_timestamp &lt; 1036800">
 									<xsl:text> nästa </xsl:text>
 									<xsl:call-template name="get_weekday">
-										<xsl:with-param name="weekday"   select="when_weekday" />
+										<xsl:with-param name="when"   select="when" />
 									</xsl:call-template>
 								</xsl:when>
 								<xsl:otherwise>
