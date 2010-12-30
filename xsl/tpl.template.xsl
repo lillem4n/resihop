@@ -263,6 +263,9 @@
 			<fieldset>
 				<xsl:attribute name="class">
 					<xsl:value-of select="$type" />
+					<xsl:if test="$type = '' or not($type)">
+						<xsl:text> passenger</xsl:text>
+					</xsl:if>
 					<xsl:text> </xsl:text>
 					<xsl:if test="$function = 'addtrip' or $function = 'edittrip'">savetrip</xsl:if>
 					<xsl:if test="$function = 'search'">search</xsl:if>
@@ -725,7 +728,11 @@
 		<xsl:param name="type" />
 		<div>
 			<xsl:attribute name="class">
+				<xsl:text>highfive </xsl:text>
 				<xsl:value-of select="$type"/>
+				<xsl:if test="$type = '' or not($type)">
+					<xsl:text>passenger</xsl:text>
+				</xsl:if>
 				<xsl:text>highfive</xsl:text>
 			</xsl:attribute>
 			<xsl:value-of select="' '" />
@@ -786,6 +793,9 @@
 		<div id="messages">
 			<xsl:attribute name="class">
 				<xsl:value-of select="$type"/>
+				<xsl:if test="$type = '' or not($type)">
+					<xsl:text> passenger</xsl:text>
+				</xsl:if>
 			</xsl:attribute>
 			<p>
 				<xsl:if test="/root/content/trips/*">Om du inte hittar någon resa härunder kan du spara resan så att <em> andra kan hitta dig</em>.</xsl:if>
@@ -816,6 +826,9 @@
 			<div id="searchresults">
 				<xsl:attribute name="class">
 					<xsl:value-of select="$type"/>
+					<xsl:if test="$type = '' or not($type)">
+						<xsl:text> passenger</xsl:text>
+					</xsl:if>
 				</xsl:attribute>
 				<h2>
 					<xsl:value-of select="count(/root/content/trips/trip)" />

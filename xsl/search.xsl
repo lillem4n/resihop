@@ -78,99 +78,107 @@
 
 			<!-- Inga träffar så vi visar spara resa istället -->
 			<xsl:when test="count(/root/content/trips/trip) = 0 and not(/root/meta/errors)">
-
-				<xsl:if test="/root/meta/url_params/got_car = 0">
-					<xsl:call-template name="trip_form">
-						<xsl:with-param name="header"   select="'Ingen resa matchade din sökning - Spara din resa'" />
-						<xsl:with-param name="size"     select="'savetrip'" />
-						<xsl:with-param name="function" select="'addtrip'" />
-
-						<!-- Since you search for got_car 0, you're a driver -->
-						<xsl:with-param name="type" select="'driver'" />
-
-					</xsl:call-template>
-				</xsl:if>
-
-				<xsl:if test="/root/meta/url_params/got_car = 1">
-					<xsl:call-template name="trip_form">
-						<xsl:with-param name="header"   select="'Ingen resa matchade din sökning - Spara din resa'" />
-						<xsl:with-param name="size"     select="'savetrip'" />
-						<xsl:with-param name="function" select="'addtrip'" />
-
-						<!-- Since you search for got_car 1, you're a passenger -->
-						<xsl:with-param name="type" select="'passenger'" />
-
-					</xsl:call-template>
-				</xsl:if>
+				<xsl:choose>
+					<xsl:when test="/root/meta/url_params/got_car = 0">
+						<xsl:call-template name="trip_form">
+							<xsl:with-param name="header"   select="'Ingen resa matchade din sökning - Spara din resa'" />
+							<xsl:with-param name="size"     select="'savetrip'" />
+							<xsl:with-param name="function" select="'addtrip'" />
+	
+							<!-- Since you search for got_car 0, you're a driver -->
+							<xsl:with-param name="type" select="'driver'" />
+	
+						</xsl:call-template>
+					</xsl:when>
+	
+					<xsl:when test="/root/meta/url_params/got_car = 1">
+						<xsl:call-template name="trip_form">
+							<xsl:with-param name="header"   select="'Ingen resa matchade din sökning - Spara din resa'" />
+							<xsl:with-param name="size"     select="'savetrip'" />
+							<xsl:with-param name="function" select="'addtrip'" />
+	
+							<!-- Since you search for got_car 1, you're a passenger -->
+							<xsl:with-param name="type" select="'passenger'" />
+	
+						</xsl:call-template>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:call-template name="trip_form">
+							<xsl:with-param name="type" select="''" />
+							<xsl:with-param name="header" select="'Spara din resa'" />
+							<xsl:with-param name="function" select="'addtrip'" />
+						</xsl:call-template>
+					</xsl:otherwise>
+				</xsl:choose>
 
 			</xsl:when>
 
 			<xsl:otherwise>
-
-				<xsl:if test="/root/meta/url_params/got_car = 0">
-					<xsl:call-template name="message">
-						<xsl:with-param name="type" select="'driver'" />
-					</xsl:call-template>
-
-					<xsl:call-template name="logo">
-						<xsl:with-param name="type" select="'driver'" />
-					</xsl:call-template>
-
-					<xsl:call-template name="trip_form">
-						<xsl:with-param name="header" select="'Jag söker passagerare'" />
-						<xsl:with-param name="type" select="'driver'" />
-						<xsl:with-param name="size" select="'search'" />
-						<xsl:with-param name="function" select="'search'" />
-					</xsl:call-template>
-
-					<xsl:call-template name="searchresults">
-						<xsl:with-param name="type" select="'driver'" />
-					</xsl:call-template>
-				</xsl:if>
-
-				<xsl:if test="/root/meta/url_params/got_car = 1">
-					<xsl:call-template name="trip_form">
-						<xsl:with-param name="header" select="'Jag söker skjuts'" />
-						<xsl:with-param name="type" select="'passenger'" />
-						<xsl:with-param name="size" select="'search'" />
-						<xsl:with-param name="function" select="'search'" />
-					</xsl:call-template>
-
-					<xsl:call-template name="logo">
-						<xsl:with-param name="type" select="'passenger'" />
-					</xsl:call-template>
-
-					<xsl:call-template name="message">
-						<xsl:with-param name="type" select="'passenger'" />
-					</xsl:call-template>
-
-					<xsl:call-template name="searchresults">
-						<xsl:with-param name="type" select="'passenger'" />
-					</xsl:call-template>
-				</xsl:if>
-
-				<xsl:if test="/root/meta/url_params/got_car = '' or not(/root/meta/url_params/got_car)">
-					<xsl:call-template name="trip_form">
-						<xsl:with-param name="header" select="'Specificera din sökning'" />
-						<xsl:with-param name="size" select="'search'" />
-						<xsl:with-param name="function" select="'search'" />
-						<xsl:with-param name="type" select="''" />
-					</xsl:call-template>
-
-					<xsl:call-template name="logo">
-						<xsl:with-param name="type" select="''" />
-					</xsl:call-template>
-
-					<xsl:call-template name="message">
-						<xsl:with-param name="type" select="''" />
-					</xsl:call-template>
-
-					<xsl:call-template name="searchresults">
-						<xsl:with-param name="type" select="''" />
-					</xsl:call-template>
-
-				</xsl:if>
-
+				<xsl:choose>
+					<xsl:when test="/root/meta/url_params/got_car = 0">
+						<xsl:call-template name="message">
+							<xsl:with-param name="type" select="'driver'" />
+						</xsl:call-template>
+	
+						<xsl:call-template name="logo">
+							<xsl:with-param name="type" select="'driver'" />
+						</xsl:call-template>
+	
+						<xsl:call-template name="trip_form">
+							<xsl:with-param name="header" select="'Jag söker passagerare'" />
+							<xsl:with-param name="type" select="'driver'" />
+							<xsl:with-param name="size" select="'search'" />
+							<xsl:with-param name="function" select="'search'" />
+						</xsl:call-template>
+	
+						<xsl:call-template name="searchresults">
+							<xsl:with-param name="type" select="'driver'" />
+						</xsl:call-template>
+					</xsl:when>
+	
+					<xsl:when test="/root/meta/url_params/got_car = 1">
+						<xsl:call-template name="trip_form">
+							<xsl:with-param name="header" select="'Jag söker skjuts'" />
+							<xsl:with-param name="type" select="'passenger'" />
+							<xsl:with-param name="size" select="'search'" />
+							<xsl:with-param name="function" select="'search'" />
+						</xsl:call-template>
+	
+						<xsl:call-template name="logo">
+							<xsl:with-param name="type" select="'passenger'" />
+						</xsl:call-template>
+	
+						<xsl:call-template name="message">
+							<xsl:with-param name="type" select="'passenger'" />
+						</xsl:call-template>
+	
+						<xsl:call-template name="searchresults">
+							<xsl:with-param name="type" select="'passenger'" />
+						</xsl:call-template>
+					</xsl:when>
+	
+					<xsl:otherwise>
+						<xsl:call-template name="trip_form">
+							<xsl:with-param name="header" select="'Specificera din sökning'" />
+							<xsl:with-param name="size" select="'search'" />
+							<xsl:with-param name="function" select="'search'" />
+							<xsl:with-param name="type" select="''" />
+						</xsl:call-template>
+	
+						<xsl:call-template name="logo">
+							<xsl:with-param name="type" select="''" />
+						</xsl:call-template>
+	
+						<xsl:call-template name="message">
+							<xsl:with-param name="type" select="''" />
+						</xsl:call-template>
+	
+						<xsl:call-template name="searchresults">
+							<xsl:with-param name="type" select="''" />
+						</xsl:call-template>
+	
+					</xsl:otherwise>
+				</xsl:choose>
 			</xsl:otherwise>
 
 		</xsl:choose>

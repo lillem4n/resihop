@@ -151,12 +151,12 @@ a.header{
 	background:         url(/images/bluegreen.png) no-repeat center bottom;
 }
 
-.highfive.driver {
+.driverhighfive {
 	background:         url(/images/bluewhite.png) no-repeat center bottom;
 }
 
-.highfive.passenger {
-	background:         url(/images//greenwhite.png) no-repeat center bottom;
+.passengerhighfive {
+	background:         url(/images/greenwhite.png) no-repeat center bottom;
 }
 
 /* ------------- Fields! ---------------- */
@@ -476,11 +476,7 @@ p, #searchresults h2 {
 }
 
 #searchresults tr.highlight td {
-	background:			rgb(147, 206, 225)!important;
-}
-
-#searchresults.passenger tr.highlight td{
-	background:			rgb(167, 209, 110)!important;
+	background:			rgb(255, 251, 165)!important;
 }
 
 
@@ -631,7 +627,7 @@ div.savetrip.passenger table, div.savetrip.passenger p.code{
 
 #messages {
 	float:				left;
-	margin: 			8.4% 4% 0 4%;
+	margin: 			8.4% 4.5% 0 4.5%;
 	width:				41%;
 }
 
