@@ -83,22 +83,52 @@
 					<item>
 						<title>
 							<xsl:if test="got_car = '1'" >
-								<xsl:value-of select="'Söker passagerare '" />
+								<xsl:value-of select="'Kommer köra '" />
 							</xsl:if>
 							<xsl:if test="got_car = '0'" >
-								<xsl:value-of select="'Söker bil '" />
+								<xsl:value-of select="'Letar bil '" />
 							</xsl:if>
-							<xsl:text>från #</xsl:text>
+							<xsl:text>#</xsl:text>
 								<xsl:call-template name="place_cleaner">
 									<xsl:with-param name="place"   select="from" />
 								</xsl:call-template>
-							<xsl:text> till #</xsl:text>
+							<xsl:text> - #</xsl:text>
 									<xsl:call-template name="place_cleaner">
 										<xsl:with-param name="place"   select="to" />
 									</xsl:call-template>
 							<xsl:text> </xsl:text>
-							<xsl:value-of select="substring(when_iso, 0, 10)"/>
-							<xsl:text> #samåkning.</xsl:text>
+							<xsl:choose>
+								<xsl:when test="when_rel = 0">
+									<xsl:text> imorgon</xsl:text>
+								</xsl:when>
+								<xsl:when test="when_rel = 1">
+									<xsl:text> i övermorgon</xsl:text>
+								</xsl:when>
+								<xsl:when test="when_rel &lt; 5">
+									<xsl:text> på </xsl:text>
+									<xsl:call-template name="get_weekday">
+										<xsl:with-param name="weekday"   select="when_weekday" />
+									</xsl:call-template>
+								</xsl:when>
+								<xsl:when test="when_rel &lt; 12">
+									<xsl:text> nästa </xsl:text>
+									<xsl:call-template name="get_weekday">
+										<xsl:with-param name="weekday"   select="when_weekday" />
+									</xsl:call-template>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:if test="substring(when_iso, 9, 1)!=0">
+										<xsl:value-of select="substring(when_iso, 9, 1)"/>
+									</xsl:if>
+									<xsl:value-of select="substring(when_iso, 10, 1)"/>
+									<xsl:text>/</xsl:text>
+									<xsl:if test="substring(when_iso, 6, 1)!=0">
+										<xsl:value-of select="substring(when_iso, 6, 1)"/>
+									</xsl:if>
+									<xsl:value-of select="substring(when_iso, 7, 1)"/>
+								</xsl:otherwise>
+							</xsl:choose>
+							<xsl:text>. #samåkning</xsl:text>
 						</title>
 						<link>
 							<xsl:value-of select="/root/meta/protocol" />
