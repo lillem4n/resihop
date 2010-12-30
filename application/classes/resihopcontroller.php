@@ -16,13 +16,21 @@ class Resihopcontroller extends Xsltcontroller
 			}
 		}
 
+		// Add all GET/POST data to the XML
 		xml::to_XML(
 			array('url_params' => $_POST),
 			$this->xml_meta
 		);
 
+		// Set resihop version, so frontend knows what to expect
 		xml::to_XML(
 			array('version' => Kohana::config('resihop.version')),
+			$this->xml_meta
+		);
+
+		// Add the servers current timestamp
+		xml::to_XML(
+			array('current_timestamp' => time()),
 			$this->xml_meta
 		);
 	}
