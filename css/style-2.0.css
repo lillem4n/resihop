@@ -144,7 +144,7 @@ a.header{
     position: 			absolute;
     top: 				99px;
    	width:				143px;
-   	margin:				0 -72px -143px -72px;
+   	margin:				0 -74px -143px -74px;
  	left:			 	50%;
    	height:             78px;
 	z-index:            2;
@@ -347,8 +347,8 @@ fieldset .button {
 
 
 #radiobuttons label.regular {
-	margin:             1.1em 1.8em 0 .5em;
-	width:              auto;
+	margin:             1.1em 0 0 .5em;
+	width:              15em;
 	text-align:         left;
 	float:              left;
 }

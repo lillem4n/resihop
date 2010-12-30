@@ -24,20 +24,34 @@
 				<xsl:call-template name="edit_form" />
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:if test="/root/content/trip_data/got_car = 1 or /root/meta/url_params/got_car = 1">
-					<xsl:call-template name="trip_form">
+				<xsl:choose>
+					<xsl:when test="(/root/content/trip_data/got_car = 1 or /root/meta/url_params/got_car = 1) and /root/meta/url_params/posted">
+					<xsl:call-template name="trip_saved">
 						<xsl:with-param name="type" select="'driver'" />
-						<xsl:with-param name="header" select="'Ändra eller ta bort din resa'" />
-						<xsl:with-param name="function" select="'edittrip'" />
+						<xsl:with-param name="header" select="'Din resa är ändrad'" />
 					</xsl:call-template>
-				</xsl:if>
-				<xsl:if test="/root/content/trip_data/got_car = 0 or /root/meta/url_params/got_car = 0">
-					<xsl:call-template name="trip_form">
-						<xsl:with-param name="type" select="'passenger'" />
-						<xsl:with-param name="header" select="'Ändra eller ta bort din resa'" />
-						<xsl:with-param name="function" select="'edittrip'" />
-					</xsl:call-template>
-				</xsl:if>
+					</xsl:when>
+					<xsl:when test="(/root/content/trip_data/got_car = 0 or /root/meta/url_params/got_car = 0) and /root/meta/url_params/posted">
+						<xsl:call-template name="trip_saved">
+							<xsl:with-param name="type" select="'passenger'" />
+							<xsl:with-param name="header" select="'Din resa är ändrad'" />
+						</xsl:call-template>
+					</xsl:when>
+					<xsl:when test="/root/content/trip_data/got_car = 1 or /root/meta/url_params/got_car = 1">
+						<xsl:call-template name="trip_form">
+							<xsl:with-param name="type" select="'driver'" />
+							<xsl:with-param name="header" select="'Ändra eller ta bort din resa'" />
+							<xsl:with-param name="function" select="'edittrip'" />
+						</xsl:call-template>
+					</xsl:when>
+					<xsl:when test="/root/content/trip_data/got_car = 0 or /root/meta/url_params/got_car = 0">
+						<xsl:call-template name="trip_form">
+							<xsl:with-param name="type" select="'passenger'" />
+							<xsl:with-param name="header" select="'Ändra eller ta bort din resa'" />
+							<xsl:with-param name="function" select="'edittrip'" />
+						</xsl:call-template>
+					</xsl:when>
+				</xsl:choose>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>

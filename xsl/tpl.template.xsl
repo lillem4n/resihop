@@ -142,6 +142,8 @@
 				<link rel="icon" type="image/png" href="/favicon.png" />
 				<link rel="search" type="application/opensearchdescription+xml" href="quicksearch.xml" title="Resihop.nu" />
 				<title><xsl:call-template name="title" /></title>
+				<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
 				<script type="text/javascript" src="/js/jquery-1.4.2.min.js"><![CDATA[ // ]]></script>
 				<script type="text/javascript" src="/js/ui.geo_autocomplete.js"><![CDATA[ // ]]></script>
 				<script type="text/javascript" src="/js/common-2.0.js"><![CDATA[ // ]]></script>
@@ -281,7 +283,7 @@
 						</xsl:choose>
 					</p>
 				</xsl:if>
-				<xsl:if test="$function = 'addtrip'">
+				<xsl:if test="$function = 'addtrip' or $function = 'edittrip'">
 					<input type="hidden" name="posted" value="" />
 				</xsl:if>
 				<div class="generals">
@@ -422,6 +424,7 @@
 			<div class="saved_trip">
 				<p class="regular">Koden nedan kan användas om du vill ändra på din resa framöver, du kan också få den mailad till dig senare.</p>
 				<p class="code">
+					<xsl:value-of select="/root/meta/url_params/code" />
 					<xsl:value-of select="/root/content/new_trip/code" />
 				</p>
 				<p class="prebutton"><xsl:text>Lägg till</xsl:text>
@@ -430,19 +433,19 @@
 							<xsl:text>http://</xsl:text>
 							<xsl:value-of select="/root/meta/domain" />
 							<xsl:text>/addtrip?from=</xsl:text>
-							<xsl:value-of select="/root/content/new_trip/to" />
+							<xsl:value-of select="/root/meta/url_params/to" />
 							<xsl:text>&amp;to=</xsl:text>
-							<xsl:value-of select="/root/content/new_trip/from" />
+							<xsl:value-of select="/root/meta/url_params/from" />
 							<xsl:text>&amp;name=</xsl:text>
-							<xsl:value-of select="/root/content/new_trip/name" />
+							<xsl:value-of select="/root/meta/url_params/name" />
 							<xsl:text>&amp;email=</xsl:text>
-							<xsl:value-of select="/root/content/new_trip/email" />
+							<xsl:value-of select="/root/meta/url_params/email" />
 							<xsl:text>&amp;phone=</xsl:text>
-							<xsl:value-of select="/root/content/new_trip/phone" />
+							<xsl:value-of select="/root/meta/url_params/phone" />
 							<xsl:text>&amp;details=</xsl:text>
-							<xsl:value-of select="/root/content/new_trip/details" />
+							<xsl:value-of select="/root/meta/url_params/details" />
 							<xsl:text>&amp;got_car=</xsl:text>
-							<xsl:value-of select="/root/content/new_trip/got_car" />
+							<xsl:value-of select="/root/meta/url_params/got_car" />
 						</xsl:attribute>
 						<xsl:text>Returresa</xsl:text>
 					</a>
@@ -458,6 +461,7 @@
 								<xsl:text>http://</xsl:text>
 								<xsl:value-of select="/root/meta/domain" />
 								<xsl:text>/edittrip?code=</xsl:text>
+								<xsl:value-of select="/root/meta/url_params/code" />
 								<xsl:value-of select="/root/content/new_trip/code" />
 							</xsl:attribute>
 							<xsl:text>Ändra</xsl:text>
@@ -466,31 +470,31 @@
 				</tr>
 				<tr>
 					<td class="label">Från</td>
-					<td><xsl:value-of select="/root/content/new_trip/from" /></td>
+					<td><xsl:value-of select="/root/meta/url_params/from" /></td>
 				</tr>
 				<tr>
 					<td class="label">Till</td>
-					<td><xsl:value-of select="/root/content/new_trip/to" /></td>
+					<td><xsl:value-of select="/root/meta/url_params/to" /></td>
 				</tr>
 				<tr>
 					<td class="label">När</td>
-					<td><xsl:value-of select="/root/content/new_trip/when_iso" /></td>
+					<td><xsl:value-of select="/root/meta/url_params/when" /></td>
 				</tr>
 				<tr>
 					<td class="label">Namn</td>
-					<td><xsl:value-of select="/root/content/new_trip/name" /></td>
+					<td><xsl:value-of select="/root/meta/url_params/name" /></td>
 				</tr>
 				<tr>
 					<td class="label">E-post</td>
-					<td><xsl:value-of select="/root/content/new_trip/email" /></td>
+					<td><xsl:value-of select="/root/meta/url_params/email" /></td>
 				</tr>
 				<tr>
 					<td class="label">Telefon</td>
-					<td><xsl:value-of select="/root/content/new_trip/phone" /></td>
+					<td><xsl:value-of select="/root/meta/url_params/phone" /></td>
 				</tr>
 				<tr>
 					<td class="label last">Detaljer</td>
-					<td class="last"><xsl:value-of select="/root/content/new_trip/details" /></td>
+					<td class="last"><xsl:value-of select="/root/meta/url_params/details" /></td>
 				</tr>
 			</table>
 		</div>

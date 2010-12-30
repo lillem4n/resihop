@@ -115,7 +115,7 @@ $(document).ready(function()
 	    $('input.button').attr('disabled', 'disabled');
 	});
     
- //  	$('.from, .to').geo_autocomplete();
+  	$('.from, .to').geo_autocomplete();
 });
 
 function autoClear(selector)
