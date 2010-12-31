@@ -27,12 +27,12 @@ $.widget( "ui.geo_autocomplete", {
 	options: {
 		geocoder_region: '', // filter to a specific region, e.g. 'Europe'
 		geocoder_types: 'locality,political,sublocality,neighborhood,country', // array of acceptable location types, see http://code.google.com/apis/maps/documentation/javascript/services.html#GeocodingAddressTypes
-		geocoder_address: false, // true = use the full formatted address, false = use only the segment that matches the search term
+		geocoder_address: true, // true = use the full formatted address, false = use only the segment that matches the search term
 
 
 		mapsensor: false, // see http://code.google.com/apis/maps/documentation/staticmaps/#Sensor
 		minLength: 3, // see http://jqueryui.com/demos/autocomplete/#option-minLength
-		delay: 50, // see http://jqueryui.com/demos/autocomplete/#option-delay
+		delay: 25, // see http://jqueryui.com/demos/autocomplete/#option-delay
 		// callback function to get autocomplete results
 		source: function(_request, _response) {
 			if (_request.term in this.options._cache) {

@@ -142,11 +142,11 @@
 				<link rel="icon" type="image/png" href="/favicon.png" />
 				<link rel="search" type="application/opensearchdescription+xml" href="quicksearch.xml" title="Resihop.nu" />
 				<title><xsl:call-template name="title" /></title>
-				<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
 				<script type="text/javascript" src="/js/jquery-1.4.2.min.js"><![CDATA[ // ]]></script>
 				<script type="text/javascript" src="/js/ui.geo_autocomplete.js"><![CDATA[ // ]]></script>
 				<script type="text/javascript" src="/js/common-2.0.js"><![CDATA[ // ]]></script>
+				<script src="http://maps.gstatic.com/intl/sv_se/mapfiles/api-3/3/5/main.js" type="text/javascript"></script>
 				<script type="text/javascript">
 					var _gaq = _gaq || [];
 					_gaq.push(['_setAccount', 'UA-6975218-3']);
