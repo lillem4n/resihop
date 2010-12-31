@@ -734,7 +734,7 @@
 			<xsl:attribute name="class">
 				<xsl:text>highfive </xsl:text>
 				<xsl:value-of select="$type"/>
-				<xsl:if test="$type = '' or not($type)">
+				<xsl:if test="($type = '' or not($type)) and /root/meta/url_params/controller != welcome">
 					<xsl:text>passenger</xsl:text>
 				</xsl:if>
 				<xsl:text>highfive</xsl:text>
