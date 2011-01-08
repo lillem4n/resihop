@@ -4,14 +4,6 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 >
 
-	<xsl:output
-		method="html"
-		encoding="utf-8"
-		doctype-system="about:legacy-compat"
-		indent="no"
-		omit-xml-declaration="no"
-	/>
-
 	<xsl:template name="base">
 		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="sv" lang="sv">
 			<head>
