@@ -29,7 +29,7 @@ class Controller_Checkaddress extends Resihopcontroller
 		}
 		else
 		{
-			$this->add_error('Missing parameter: q');
+			$this->add_error('Required', array('param' => 'q'));
 		}
 	}
 
