@@ -32,6 +32,12 @@
 		<xsl:choose>
 
 			<!-- Trip is saved -->
+			<xsl:when test="/root/meta/errors/error/message ='This trip is a duplicate'">
+				<xsl:call-template name="message_box">
+					<xsl:with-param name="title" select="'Resan redan sparad'" />
+					<xsl:with-param name="message" select="'En exakt likadan resa med samma mailadress är redan skapad.'" />
+				</xsl:call-template>
+			</xsl:when>
 			<xsl:when test="/root/content/new_trip/*">
 				<xsl:if test="/root/meta/url_params/got_car = 1">
 					<xsl:call-template name="trip_saved">
@@ -46,6 +52,7 @@
 					</xsl:call-template>
 				</xsl:if>
 			</xsl:when>
+
 
 			<!-- Trying to add a trip -->
 			<xsl:otherwise>

@@ -62,7 +62,7 @@ class Controller_Addtrip extends Resihopcontroller
 			{
 				foreach ($post->errors() as $field => $error_data)
 				{
-					if ($error_data[0] == 'not_empty')                     $this->add_error('Required',        array('param' => $field));
+					if     ($error_data[0] == 'not_empty')                 $this->add_error('Required',        array('param' => $field));
 					elseif ($error_data[0] == 'email')                     $this->add_error('Not valid email', array('param' => $field));
 					elseif ($error_data[0] == 'strtotime')                 $this->add_error('Invalid format',  array('param' => $field));
 					elseif ($error_data[0] == 'Trip::validate_phone')      $this->add_error('Invalid format',  array('param' => $field));
