@@ -94,28 +94,36 @@ class Model_Trip extends Model
 			$errors[] = 'Invalid to-address.';
 		}
 
-		if (!preg_match('/^[0-9]{1,}/', $when))
+		if (!preg_match('/^[0-9]{1,}/', $when)) $errors[] = 'Invalid when. Must be a UNIX timestamp.';
+		else                                    $new_trip_data['when'] = $when;
+
+		if ($got_car !== 1 && $got_car !== 0)   $errors[] = 'got_car must be either (int)1 or (int)0.';
+		else                                    $new_trip_data['got_car'] = $got_car;
+
+		// Check for duplicate
+		if ( ! count($errors))
 		{
-			$errors[] = 'Invalid when. Must be a UNIX timestamp.';
-		}
-		else
-		{
-			$new_trip_data['when'] = $when;
+			$sql = 'SELECT trip_id FROM trips WHERE
+				details  = '.$pdo->quote($new_trip_data['details']) .' AND
+				name     = '.$pdo->quote($new_trip_data['name'])    .' AND
+				email    = '.$pdo->quote($new_trip_data['email'])   .' AND
+				phone    = '.$pdo->quote($new_trip_data['phone'])   .' AND
+				from_lat = '.floatval($new_trip_data['from_lat'])   .' AND
+				from_lon = '.floatval($new_trip_data['from_lon'])   .' AND
+				to_lat   = '.floatval($new_trip_data['to_lat'])     .' AND
+				to_lon   = '.floatval($new_trip_data['to_lon'])     .' AND
+				`when`   = '.$pdo->quote($new_trip_data['when'])    .' AND
+				got_car  = '.$pdo->quote($new_trip_data['got_car']) .'
+				 ;';
+
+			if ($pdo->query($sql)->fetchColumn() > 0)
+			{
+				$errors[] = 'This trip is a duplicate';
+			}
+
 		}
 
-		if ($got_car !== 1 && $got_car !== 0)
-		{
-			$errors[] = 'got_car must be either (int)1 or (int)0.';
-		}
-		else
-		{
-			$new_trip_data['got_car'] = $got_car;
-		}
-
-		if (count($errors))
-		{
-			return $errors;
-		}
+		if (count($errors)) return $errors;
 		else
 		{
 			$sql = 'INSERT INTO trips (';
@@ -127,10 +135,10 @@ class Model_Trip extends Model
 				$tmp .= $pdo->quote($data).',';
 			}
 
-			$code = Text::random('distinct',12);
+			$code = Text::random('distinct', 12);
 			while ($pdo->query('SELECT trip_id FROM trips WHERE code = '.$pdo->quote($code))->fetchColumn())
 			{
-				$code = Text::random('distinct',12);
+				$code = Text::random('distinct', 12);
 			}
 
 			$sql .= 'inserted,code) VALUES('.$tmp.time().','.$pdo->quote($code).');';
