@@ -310,7 +310,7 @@ Klicka på "ändra resa"'),
 				(SELECT address FROM google_cache WHERE `lon` = to_lon AND lat = to_lat LIMIT 1) AS `to`
 			FROM `trips`
 			WHERE
-				`when` > ' . time();
+				`when` > ' . (time() - (24 * 60 * 60));
 
 		// If $got_car is supplied, add it to the WHERE clause
 		if			($got_car === 0) $sql .= ' AND got_car = 0';
