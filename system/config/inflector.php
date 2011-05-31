@@ -1,13 +1,16 @@
-<?php defined('SYSPATH') or die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct script access.');
 
 return array(
 
 	'uncountable' => array(
 		'access',
 		'advice',
+		'aircraft',
 		'art',
 		'baggage',
+		'bison',
 		'dances',
+		'deer',
 		'equipment',
 		'fish',
 		'fuel',
@@ -19,7 +22,9 @@ return array(
 		'information',
 		'knowledge',
 		'luggage',
+		'media',
 		'money',
+		'moose',
 		'music',
 		'news',
 		'patience',
@@ -27,12 +32,15 @@ return array(
 		'pollution',
 		'research',
 		'rice',
+		'salmon',
 		'sand',
 		'series',
 		'sheep',
 		'sms',
+		'spam',
 		'species',
 		'staff',
+		'swine',
 		'toothpaste',
 		'traffic',
 		'understanding',
@@ -57,5 +65,7 @@ return array(
 		'was' => 'were',
 		'is' => 'are',
 		'verse' => 'verses',
+		'hero' => 'heroes',
+		'purchase' => 'purchases',
 	),
 );

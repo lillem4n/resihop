@@ -5,8 +5,8 @@
  * @package    Kohana
  * @category   Helpers
  * @author     Kohana Team
- * @copyright  (c) 2009 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @copyright  (c) 2009-2011 Kohana Team
+ * @license    http://kohanaframework.org/license
  */
 class Kohana_CLI {
 
@@ -14,7 +14,7 @@ class Kohana_CLI {
 	 * Returns one or more command-line options. Options are specified using
 	 * standard CLI syntax:
 	 *
-	 *     php index.php --username "john.smith" --password "secret"
+	 *     php index.php --username=john.smith --password=secret --var="some value with spaces"
 	 *
 	 *     // Get the values of "username" and "password"
 	 *     $auth = CLI::options('username', 'password');
