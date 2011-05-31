@@ -28,7 +28,7 @@
 					<xsl:with-param name="message" select="'Koden för att ändra din resa är nu skickad till den angivna e-post-adressen. Kolla i spam-filtret ifall mailet inte kommer fram.'" />
 				</xsl:call-template>
 			</xsl:when>
-			<xsl:when test="/root/meta/path = 'sendcode' and not(/root/content/message)">
+			<xsl:when test="/root/meta/path = 'sendcode/index' and not(/root/content/message)">
 				<xsl:call-template name="sendcode_form" />
 			</xsl:when>
 			<xsl:otherwise>

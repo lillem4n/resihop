@@ -93,12 +93,12 @@ h1 {
 	text-indent:        -1337em;
 }
 
-.catchphrase{
-	padding:			5.1em 0 0 13.5em;
+.catchphrase {
+	padding:            5.1em 0 0 13.5em;
 }
 
-a.header{
-	margin-right:	-100%;
+a.header {
+	margin-right:       -100%;
 }
 
 #wrapper {
@@ -111,18 +111,19 @@ a.header{
 
 
 #header {
-	height: 10em;
+	height:             10em;
 }
 
-#hidden{
+#hidden {
 	display: hidden;
 }
+
 /* ------------- Menu! ---------------- */
 
 #menu {
 	position:           relative;
 	top:                2em;
-	right:				0;
+	right:              0;
 }
 
 #menu li {
@@ -131,7 +132,7 @@ a.header{
 	padding:            0 .7em 0 .7em;
 	border-right:       1px solid rgb(102,102,102);
 	float:              right;
-	height:				1em;
+	height:             1em;
 }
 
 #menu li:first-child {
@@ -141,12 +142,12 @@ a.header{
 
 /* ------------- High-five-element! ---------------- */
 .highfive {
-    position: 			absolute;
-    top: 				99px;
-   	width:				143px;
-   	margin:				0 -74px -143px -74px;
- 	left:			 	50%;
-   	height:             78px;
+	position:           absolute;
+	top:                99px;
+	width:              143px;
+	margin:             0 -74px -143px -74px;
+	left:               50%;
+	height:             78px;
 	z-index:            2;
 	background:         url(/images/bluegreen.png) no-repeat center bottom;
 }
@@ -169,13 +170,21 @@ fieldset, div.savetrip, .message_box {
 }
 
 .message_box {
-	padding-bottom: 1em;
+	padding-bottom:     1em;
 }
 
 form#edittrip fieldset.code, form#sendcode fieldset.email, div.message_box {
 	margin:             0 auto;
 	display:            block;
 	float:              none;
+}
+
+form#sendcode fieldset.email div#generals label {
+	width:              15%;
+}
+
+form#sendcode fieldset.email div#generals input.email {
+	width:              60%;
 }
 
 fieldset h2, div.savetrip h2, .message_box h2 {
@@ -189,62 +198,62 @@ fieldset h2, div.savetrip h2, .message_box h2 {
 	-moz-border-radius-topright: 1em;
 	border-top-left-radius: 1em;
 	-moz-border-radius-topleft: 1em;
-	position:			relative;
-	top:				-3px;
+	position:           relative;
+	top:                -3px;
 }
 
 fieldset p.regular, fieldset a, div.savetrip p.regular, .message_box p.regular {
 	font-size:          1.2em;
 	margin:             0 2em 1.2em 2em;
-	line-height:		1.3em;
-	display:			block;
+	line-height:        1.3em;
+	display:            block;
 }
 
-fieldset.savetrip p.regular{
-	width:			35em;
+fieldset.savetrip p.regular {
+	width:              35em;
 }
 
-fieldset a.forgotten{
+fieldset a.forgotten {
 	margin:             -1.2em 2.1em 0 0;
-	float:				right;
-	clear:				left;
-	line-height:		1em;
-	font-size:			1em;
-	width:				17em;
-	text-align:			right;
+	float:              right;
+	clear:              left;
+	line-height:        1em;
+	font-size:          1em;
+	width:              17em;
+	text-align:         right;
 }
 
-div.savetrip p.code{
-	font-size: 1.2em;
-	width: 11em;
-	border-radius: 1em;
+div.savetrip p.code {
+	font-size:          1.2em;
+	width:              11em;
+	border-radius:      1em;
 	-moz-border-radius: 1em;
-	text-align: center;
-	margin: 2em auto 1.5em auto;
-	padding: 1em 0;
+	text-align:         center;
+	margin:             2em auto 1.5em auto;
+	padding:            1em 0;
 }
-div.saved_trip{
-	margin-top: 2em;
-	float: left;
-	width: 38em;
-}
-
-div.saved_trip p{
-	text-align: center;
+div.saved_trip {
+	margin-top:         2em;
+	float:              left;
+	width:              38em;
 }
 
-
-div.saved_trip p.prebutton{
-	float:right;
-	font-size: 1.2em;
-	margin-right: 2em;
+div.saved_trip p {
+	text-align:         center;
 }
 
-div.saved_trip p.prebutton a{
-	display:block;
-	padding: .5em 1em;
-	margin-top: .5em;
-	font-size: 1em;
+
+div.saved_trip p.prebutton {
+	float:              right;
+	font-size:          1.2em;
+	margin-right:       2em;
+}
+
+div.saved_trip p.prebutton a {
+	display:            block;
+	padding:            .5em 1em;
+	margin-top:         .5em;
+	font-size:          1em;
 }
 
 div.savetrip table{
