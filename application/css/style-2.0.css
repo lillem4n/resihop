@@ -775,6 +775,7 @@ div.savetrip.passenger table, div.savetrip.passenger p.code{
 }
 
 .freetext h3,.freetext h4,.freetext h5 {
+	margin-top:          1.5em;
 	font-size:	         1.1em;
 	line-height:         1.5em;
 }
@@ -783,7 +784,7 @@ div.savetrip.passenger table, div.savetrip.passenger p.code{
 	color:	             #000;
 	font-size:	         1.1em;
 	line-height:         1.5em;
-	padding-bottom:      2em;
+	padding-bottom:      1em;
 }
 
 .freetext td {
