@@ -106,7 +106,7 @@ a.header {
 	min-height:         100%;
 	height:             auto !important;
 	height:             100%;
-	margin:             0 auto -7em auto;
+	margin:             0 auto -5em auto;
 }
 
 
@@ -774,9 +774,15 @@ div.savetrip.passenger table, div.savetrip.passenger p.code{
 	line-height:         1.5em;
 }
 
-.freetext h3,.freetext h4,.freetext h5 {
+.freetext h3 {
 	margin-top:          1.5em;
 	font-size:	         1.1em;
+	line-height:         1.5em;
+}
+
+.freetext h4,.freetext h5 {
+	margin-top:          1.5em;
+	font-size:	         1.0em;
 	line-height:         1.5em;
 }
 
@@ -785,12 +791,39 @@ div.savetrip.passenger table, div.savetrip.passenger p.code{
 	font-size:	         1.1em;
 	line-height:         1.5em;
 	padding-bottom:      1em;
+	display:             block;
+}
+
+.freetext table th {
+	border:              none;
+	background:          none;
+	color:               #000;
+	text-align:          left;
+	padding:             5px;
+	border-bottom:       1px solid #000;
 }
 
 .freetext td {
-	border:              1px solid #000;
+	border:              none;
 	padding:             5px;
 }
+
+	.freetext tr:nth-child(even) {
+		background-color: #fffde6;
+	}
+
+.freetext ul {
+	padding-top:         1em;
+	padding-bottom:      1em;
+	list-style-type:     disc;
+	padding-left:        3em;
+}
+
+	.freetext ul li {
+		color:	             #000;
+		font-size:	         1.1em;
+		line-height:         1.5em;
+	}
 
 
 
