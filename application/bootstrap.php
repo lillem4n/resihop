@@ -61,10 +61,7 @@ I18n::lang('en-us');
  * Note: If you supply an invalid environment name, a PHP warning will be thrown
  * saying "Couldn't find constant Kohana::<INVALID_ENV_NAME>"
  */
-if (isset($_SERVER['KOHANA_ENV']))
-{
-	Kohana::$environment = constant('Kohana::'.strtoupper($_SERVER['KOHANA_ENV']));
-}
+Kohana::$environment = ($_SERVER['SERVER_NAME'] === 'resihop.nu') ? Kohana::PRODUCTION : Kohana::DEVELOPMENT;
 
 /**
  * Initialize Kohana, setting the default options.
@@ -82,6 +79,8 @@ if (isset($_SERVER['KOHANA_ENV']))
 Kohana::init(array(
 	'base_url'   => '/',
 	'index_file' => FALSE,
+	'profile'    => Kohana::$environment !== Kohana::PRODUCTION,
+	'errors'     => Kohana::$environment !== Kohana::PRODUCTION,
 ));
 
 /**
