@@ -1,14 +1,19 @@
-<?php defined('SYSPATH') or die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * Array helper.
  *
  * @package    Kohana
  * @category   Helpers
  * @author     Kohana Team
- * @copyright  (c) 2007-2009 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @copyright  (c) 2007-2011 Kohana Team
+ * @license    http://kohanaframework.org/license
  */
 class Kohana_Arr {
+
+	/**
+	 * @var  string  default delimiter for path()
+	 */
+	public static $delimiter = '.';
 
 	/**
 	 * Tests if an array is associative or not.
@@ -33,6 +38,35 @@ class Kohana_Arr {
 	}
 
 	/**
+	 * Test if a value is an array with an additional check for array-like objects.
+	 *
+	 *     // Returns TRUE
+	 *     Arr::is_array(array());
+	 *     Arr::is_array(new ArrayObject);
+	 *
+	 *     // Returns FALSE
+	 *     Arr::is_array(FALSE);
+	 *     Arr::is_array('not an array!');
+	 *     Arr::is_array(Database::instance());
+	 *
+	 * @param   mixed    value to check
+	 * @return  boolean
+	 */
+	public static function is_array($value)
+	{
+		if (is_array($value))
+		{
+			// Definitely an array
+			return TRUE;
+		}
+		else
+		{
+			// Possibly a Traversable object, functionally the same as an array
+			return (is_object($value) AND $value instanceof Traversable);
+		}
+	}
+
+	/**
 	 * Gets a value from an array using a dot separated path.
 	 *
 	 *     // Get the value of $array['foo']['bar']
@@ -43,18 +77,51 @@ class Kohana_Arr {
 	 *     // Get the values of "color" in theme
 	 *     $colors = Arr::path($array, 'theme.*.color');
 	 *
+	 *     // Using an array of keys
+	 *     $colors = Arr::path($array, array('theme', '*', 'color'));
+	 *
 	 * @param   array   array to search
-	 * @param   string  key path, dot separated
+	 * @param   mixed   key path string (delimiter separated) or array of keys
 	 * @param   mixed   default value if the path is not set
+	 * @param   string  key path delimiter
 	 * @return  mixed
 	 */
-	public static function path($array, $path, $default = NULL)
+	public static function path($array, $path, $default = NULL, $delimiter = NULL)
 	{
-		// Remove outer dots, wildcards, or spaces
-		$path = trim($path, '.* ');
+		if ( ! Arr::is_array($array))
+		{
+			// This is not an array!
+			return $default;
+		}
 
-		// Split the keys by slashes
-		$keys = explode('.', $path);
+		if (is_array($path))
+		{
+			// The path has already been separated into keys
+			$keys = $path;
+		}
+		else
+		{
+			if (array_key_exists($path, $array))
+			{
+				// No need to do extra processing
+				return $array[$path];
+			}
+
+			if ($delimiter === NULL)
+			{
+				// Use the default delimiter
+				$delimiter = Arr::$delimiter;
+			}
+
+			// Remove starting delimiters and spaces
+			$path = ltrim($path, "{$delimiter} ");
+
+			// Remove ending delimiters, spaces, and wildcards
+			$path = rtrim($path, "{$delimiter} *");
+
+			// Split the keys by delimiter
+			$keys = explode($delimiter, $path);
+		}
 
 		do
 		{
@@ -70,7 +137,7 @@ class Kohana_Arr {
 			{
 				if ($keys)
 				{
-					if (is_array($array[$key]))
+					if (Arr::is_array($array[$key]))
 					{
 						// Dig down into the next part of the path
 						$array = $array[$key];
@@ -90,11 +157,6 @@ class Kohana_Arr {
 			elseif ($key === '*')
 			{
 				// Handle wildcards
-
-				if (empty($keys))
-				{
-					return $array;
-				}
 
 				$values = array();
 				foreach ($array as $arr)
@@ -126,6 +188,49 @@ class Kohana_Arr {
 
 		// Unable to find the value requested
 		return $default;
+	}
+
+	/**
+	* Set a value on an array by path.
+	*
+	* @see Arr::path()
+	* @param array   $array     Array to update
+	* @param string  $path      Path
+	* @param mixed   $value     Value to set
+	* @param string  $delimiter Path delimiter
+	*/
+	public static function set_path( & $array, $path, $value, $delimiter = NULL)
+	{
+		if ( ! $delimiter)
+		{
+			// Use the default delimiter
+			$delimiter = Arr::$delimiter;
+		}
+
+		// Split the keys by delimiter
+		$keys = explode($delimiter, $path);
+
+		// Set current $array to inner-most array path
+		while (count($keys) > 1)
+		{
+			$key = array_shift($keys);
+
+			if (ctype_digit($key))
+			{
+				// Make the key an integer
+				$key = (int) $key;
+			}
+
+			if ( ! isset($array[$key]))
+			{
+				$array[$key] = array();
+			}
+
+			$array = & $array[$key];
+		}
+
+		// Set key on inner-most array
+		$array[array_shift($keys)] = $value;
 	}
 
 	/**
@@ -196,26 +301,38 @@ class Kohana_Arr {
 	}
 
 	/**
-	 * Binary search algorithm.
+	 * Retrieves muliple single-key values from a list of arrays.
 	 *
-	 * @deprecated  Use [array_search](http://php.net/array_search) instead
+	 *     // Get all of the "id" values from a result
+	 *     $ids = Arr::pluck($result, 'id');
 	 *
-	 * @param   mixed    the value to search for
-	 * @param   array    an array of values to search in
-	 * @param   boolean  sort the array now
-	 * @return  integer  the index of the match
-	 * @return  FALSE    no matching index found
+	 * [!!] A list of arrays is an array that contains arrays, eg: array(array $a, array $b, array $c, ...)
+	 *
+	 * @param   array   list of arrays to check
+	 * @param   string  key to pluck
+	 * @return  array
 	 */
-	public static function binary_search($needle, $haystack, $sort = FALSE)
+	public static function pluck($array, $key)
 	{
-		return array_search($needle, $haystack);
+		$values = array();
+
+		foreach ($array as $row)
+		{
+			if (isset($row[$key]))
+			{
+				// Found a value in this row
+				$values[] = $row[$key];
+			}
+		}
+
+		return $values;
 	}
 
 	/**
 	 * Adds a value to the beginning of an associative array.
 	 *
 	 *     // Add an empty value to the start of a select list
-	 *     Arr::unshift_assoc($array, 'none', 'Select a value');
+	 *     Arr::unshift($array, 'none', 'Select a value');
 	 *
 	 * @param   array   array to modify
 	 * @param   string  array key name
@@ -295,7 +412,7 @@ class Kohana_Arr {
 			{
 				if (isset($result[$key]))
 				{
-					if (is_array($val))
+					if (is_array($val) AND is_array($result[$key]))
 					{
 						if (Arr::is_assoc($val))
 						{
@@ -347,7 +464,7 @@ class Kohana_Arr {
 	 *     $array = Arr::overwrite($a1, $a2);
 	 *
 	 *     // The output of $array will now be:
-	 *     array('name' => 'jack', 'mood' => 'happy', 'food' => 'bacon')
+	 *     array('name' => 'jack', 'mood' => 'happy', 'food' => 'tacos')
 	 *
 	 * @param   array   master array
 	 * @param   array   input arrays that will overwrite existing values

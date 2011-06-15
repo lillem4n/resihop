@@ -1,20 +1,24 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
  * File-based configuration reader. Multiple configuration directories can be
- * used by attaching multiple instances of this class to [Kohana_Config].
+ * used by attaching multiple instances of this class to [Config].
  *
  * @package    Kohana
  * @category   Configuration
  * @author     Kohana Team
- * @copyright  (c) 2009 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @copyright  (c) 2009-2011 Kohana Team
+ * @license    http://kohanaframework.org/license
  */
-class Kohana_Config_File extends Kohana_Config_Reader {
+class Kohana_Config_File extends Config_Reader {
 
-	// Configuration group name
+	/**
+	 * @var  string  Configuration group name
+	 */
 	protected $_configuration_group;
 
-	// Has the config group changed?
+	/**
+	 * @var  bool  Has the config group changed?
+	 */
 	protected $_configuration_modified = FALSE;
 
 	public function __construct($directory = 'config')
@@ -53,4 +57,4 @@ class Kohana_Config_File extends Kohana_Config_Reader {
 		return parent::load($group, $config);
 	}
 
-} // End Kohana_Config
+} // End Kohana_Config_File

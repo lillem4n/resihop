@@ -3,9 +3,9 @@
 class Resihopcontroller extends Xsltcontroller
 {
 
-	public function __construct()
+	public function __construct(Request $request, Response $response)
 	{
-		parent::__construct();
+		parent::__construct($request, $response);
 
 		// We accept URL params to, for the API
 		if (count($_GET))

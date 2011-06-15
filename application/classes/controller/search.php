@@ -3,12 +3,6 @@
 class Controller_Search extends Resihopcontroller
 {
 
-	public function __construct()
-	{
-		// This is needed for the XSLT setup
-		parent::__construct();
-	}
-
 	public function action_index()
 	{
 		// Set the name of the template to use
@@ -33,7 +27,7 @@ class Controller_Search extends Resihopcontroller
 			{
 				$this->add_error('Invalid format', array('param' => 'when'));
 			}
-			elseif (isset($get['when']) && strtotime($get['when']) < time())
+			elseif (isset($get['when']) && strtotime($get['when']) < (time() - (24 * 60 * 60)))
 			{
 				$this->add_error('Must select a time in the future', array('param' => 'when'));
 			}

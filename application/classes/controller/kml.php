@@ -3,12 +3,10 @@
 class Controller_kml extends Resihopcontroller
 {
 
-	public function __construct()
+	public function __construct(Request $request, Response $response)
 	{
-		// This is needed for the XSLT setup
-		parent::__construct();
+		parent::__construct($request, $response);
 		$this->transform = TRUE;
-
 	}
 
 	public function action_index()
