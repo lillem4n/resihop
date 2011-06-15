@@ -641,7 +641,10 @@
       <td> 
         Förklaring
       </td> 
-    </tr> 
+    </tr>
+    <td>Ingen</td>
+    <td>This trip is a duplicate</td>
+    <td>En resa med samma data är redan skapad</td>
     <tr> 
       <td> 
         from

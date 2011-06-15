@@ -23,7 +23,7 @@
 				</link>
 				<xsl:if test="/root/meta/controller = 'search'">
 					<xsl:if test="/root/meta/url_params/from and not(/root/meta/url_params/from = '') and /root/meta/url_params/to and not(/root/meta/url_params/to = '') and /root/meta/url_params/when and not(/root/meta/url_params/when = '')" >
-	
+
 						<link rel="alternate" type="application/rss+xml">
 							<xsl:attribute name="href">
 								<xsl:value-of select="/root/meta/protocol" />
@@ -54,7 +54,7 @@
 							</xsl:attribute>
 						</link>
 					</xsl:if>
-					
+
 					<xsl:if test="/root/meta/url_params/from and not(/root/meta/url_params/from = '') and /root/meta/url_params/when and not(/root/meta/url_params/when = '')" >
 						<link rel="alternate" type="application/rss+xml">
 							<xsl:attribute name="href">
@@ -83,7 +83,7 @@
 							</xsl:attribute>
 						</link>
 					</xsl:if>
-					
+
 					<xsl:if test="/root/meta/url_params/from and not(/root/meta/url_params/from = '')" >
 						<link rel="alternate" type="application/rss+xml">
 							<xsl:attribute name="href">
@@ -94,14 +94,14 @@
 								<xsl:value-of select="'rss?from='" />
 								<xsl:value-of select="/root/meta/url_params/from" />
 							</xsl:attribute>
-							
+
 							<xsl:attribute name="title">
 								<xsl:value-of select="'Alla resor från '" />
 								<xsl:value-of select="/root/meta/url_params/from" />
 							</xsl:attribute>
 						</link>
 					</xsl:if>
-					
+
 					<xsl:if test="/root/meta/url_params/to and not(/root/meta/url_params/to = '')" >
 						<link rel="alternate" type="application/rss+xml">
 							<xsl:attribute name="href">
@@ -112,7 +112,7 @@
 								<xsl:value-of select="'rss?to='" />
 								<xsl:value-of select="/root/meta/url_params/to" />
 							</xsl:attribute>
-							
+
 							<xsl:attribute name="title">
 								<xsl:value-of select="'Alla resor till '" />
 								<xsl:value-of select="/root/meta/url_params/to" />
@@ -136,9 +136,7 @@
 				<title><xsl:call-template name="title" /></title>
 
 				<script type="text/javascript" src="/js/jquery-1.4.2.min.js"><![CDATA[ // ]]></script>
-				<script type="text/javascript" src="/js/ui.geo_autocomplete.js"><![CDATA[ // ]]></script>
 				<script type="text/javascript" src="/js/common-2.0.js"><![CDATA[ // ]]></script>
-				<script src="http://maps.gstatic.com/intl/sv_se/mapfiles/api-3/3/5/main.js" type="text/javascript"></script>
 				<script type="text/javascript">
 					var _gaq = _gaq || [];
 					_gaq.push(['_setAccount', 'UA-6975218-3']);
@@ -399,7 +397,7 @@
 					</a>
 				</xsl:if>
 			</fieldset>
-		</form>		
+		</form>
 	</xsl:template>
 
 	<xsl:template name="trip_saved">
@@ -734,7 +732,7 @@
 			<xsl:value-of select="' '" />
 		</div>
 	</xsl:template>
-	
+
 	<xsl:template name="show_all">
 		<a class="show_all show_all_driver" href="/search?got_car=1">Visa alla som kör bil</a>
 		<a class="show_all show_all_passenger" href="/search?got_car=0">Visa alla som vill ha skjuts</a>
@@ -925,29 +923,29 @@
 			</div>
 		</xsl:if>
 	</xsl:template>
-	
+
 	<xsl:template name="place_cleaner">
 		<xsl:param name="place" />
 		<xsl:choose>
 			<xsl:when test="substring($place,string-length($place) - 14,15) = ' County, Sweden'">
 				<xsl:value-of select="substring($place, 0, string-length($place) - 14)" />
 			</xsl:when>
-			
+
 			<xsl:when test="substring($place,string-length($place) - 20,21) = ' Municipality, Sweden'">
 				<xsl:value-of select="substring($place, 0, string-length($place) - 20)" />
 			</xsl:when>
-			
+
 			<xsl:when test="substring($place,string-length($place) - 7,8) = ', Sweden'">
 				<xsl:value-of select="substring($place, 0, string-length($place) - 7)" />
 			</xsl:when>
-			
-			
+
+
 			<xsl:otherwise>
 				<xsl:value-of select="$place"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-	
+
 		<xsl:template name="get_weekday">
 		<xsl:param name="when" />
 		<xsl:choose>
@@ -974,6 +972,160 @@
 			</xsl:when>
 		</xsl:choose>
 	</xsl:template>
+
+		<xsl:template name="fb_header">
+		<xsl:param name="step" />
+		<div id="login">
+			<h2>Om du vill kan vi fylla i dina kontaktuppgifer åt dig.</h2>
+			<p>För att slippa skriva kontaktuppgifter måste du bara godkänna resihop. Vi kommer inte publicera något utan din tillåtelse och orsaken att vi behöver din e-post-adress är för att kunna skicka din inloggningskod om du skulle glömma den.</p>
+			<a class="fblogin" href="#">Godkänn</a>
+		</div>
+		<div id="header">
+			<h1>Faceride</h1>
+		    <p>Samåkning på facebook \o/</p>
+		</div>
+		<div id="progress">
+			<a id="first" href="/fbml/">
+					<xsl:if test="$step=1">
+						<xsl:attribute name="class">
+							<xsl:value-of select="'current'" />
+						</xsl:attribute>
+					</xsl:if>
+				<p>Steg 1<span>Sök</span></p>
+			</a>
+			<a id="second">
+				<xsl:if test="$step=2">
+					<xsl:attribute name="class">
+						<xsl:value-of select="'current'" />
+					</xsl:attribute>
+				</xsl:if>
+				<xsl:attribute name="href">
+					<xsl:text>/fbaddtrip?from=</xsl:text>
+					<xsl:value-of select="/root/meta/url_params/to" />
+					<xsl:text>&amp;to=</xsl:text>
+					<xsl:value-of select="/root/meta/url_params/to" />
+					<xsl:text>&amp;when=</xsl:text>
+					<xsl:value-of select="/root/meta/url_params/when" />
+					<xsl:text>&amp;got_car=</xsl:text>
+					<xsl:value-of select="/root/meta/url_params/got_car" />
+					<xsl:text>&amp;name=</xsl:text>
+					<xsl:value-of select="/root/meta/url_params/name" />
+					<xsl:text>&amp;email=</xsl:text>
+					<xsl:value-of select="/root/meta/url_params/email" />
+					<xsl:text>&amp;phone=</xsl:text>
+					<xsl:value-of select="/root/meta/url_params/phone" />
+					<xsl:text>&amp;details=</xsl:text>
+					<xsl:value-of select="/root/meta/url_params/details" />
+					<xsl:text>&amp;forced</xsl:text>
+				</xsl:attribute>
+				<p>Steg 2<span>Komplettera</span></p>
+			</a>
+			<a id="third">
+				<xsl:attribute name="href">
+					<xsl:text>/fbaddtrip?from=</xsl:text>
+					<xsl:value-of select="/root/meta/url_params/from" />
+					<xsl:text>&amp;to=</xsl:text>
+					<xsl:value-of select="/root/meta/url_params/to" />
+					<xsl:text>&amp;when=</xsl:text>
+					<xsl:value-of select="/root/meta/url_params/when" />
+					<xsl:text>&amp;got_car=</xsl:text>
+					<xsl:value-of select="/root/meta/url_params/got_car" />
+					<xsl:text>&amp;name=</xsl:text>
+					<xsl:value-of select="/root/meta/url_params/name" />
+					<xsl:text>&amp;email=</xsl:text>
+					<xsl:value-of select="/root/meta/url_params/email" />
+					<xsl:text>&amp;phone=</xsl:text>
+					<xsl:value-of select="/root/meta/url_params/phone" />
+					<xsl:text>&amp;details=</xsl:text>
+					<xsl:value-of select="/root/meta/url_params/details" />
+					<xsl:text>&amp;show_all</xsl:text>
+				</xsl:attribute>
+			<xsl:if test="$step=3">
+				<xsl:attribute name="class">
+					<xsl:value-of select="'current'" />
+				</xsl:attribute>
+			</xsl:if>
+			<p>Steg 3<span>Resor</span></p>
+			</a>
+		</div>
+	</xsl:template>
+
+	<xsl:template name="fb_edit">
+		<div class="form_header stage_1">
+			<h2>Ändra dina uppgifter</h2>
+			<p>Om de inte stämmer</p>
+		</div>
+		<input type="text" class="field from help" id="from" name="from" title="Ort, gata eller kommun">
+		<xsl:attribute name="value">
+			<xsl:value-of select="/root/content/trip_data/from" />
+		</xsl:attribute>
+		</input>
+		<label for="from">Från:</label>
+
+		<input type="text" class="field to help" id="to" name="to" title="Ort, gata eller kommun" value="">
+		<xsl:attribute name="value">
+			<xsl:value-of select="/root/content/trip_data/to" />
+		</xsl:attribute>
+		</input>
+		<label for="to">Till:</label>
+
+
+		<input type="text" class="field when help" id="when" name="when" title="YYYY-MM-DD">
+		<xsl:attribute name="value">
+			<xsl:value-of select="/root/content/trip_data/when_iso" />
+		</xsl:attribute>
+		</input>
+		<label for="when">När:</label>
+
+		<input type="text" class="field name" id="name" name="name">
+		<xsl:attribute name="value">
+			<xsl:value-of select="/root/content/trip_data/name" />
+		</xsl:attribute>
+		</input>
+		<label for="name">Namn:</label>
+
+		<input type="text" class="field email" id="email" name="email">
+		<xsl:attribute name="value">
+			<xsl:value-of select="/root/content/trip_data/email" />
+		</xsl:attribute>
+		</input>
+		<label for="email">E-post:</label>
+
+		<input type="text" class="field phone" id="phone" name="phone">
+
+		<xsl:attribute name="value">
+			<xsl:value-of select="/root/content/trip_data/phone" />
+		</xsl:attribute>
+		</input>
+		<label for="phone">Telefon:</label>
+
+		<select id="car" name="got_car">
+			<option value="0">
+				<xsl:if test="/root/content/trip_data/got_car=0">
+					<xsl:attribute name="selected"><xsl:value-of select="selected" /></xsl:attribute>
+				</xsl:if>
+				inte bil
+			</option>
+			<option value="1">
+				<xsl:if test="/root/content/trip_data/got_car = 1">
+					<xsl:attribute name="selected"><xsl:value-of select="selected" /></xsl:attribute>
+				</xsl:if>
+				bil
+			</option>
+		</select>
+		<label for="car">Jag har:</label>
+
+		<input type="hidden" id="code" name="code">
+		<xsl:attribute name="value">
+			<xsl:value-of select="/root/meta/url_params/code" />
+		</xsl:attribute>
+		</input>
+		<input type="hidden" name="posted" />
+		<div class="right_navigation">
+			<input class="button addtrip" type="submit" value="ÄNDRA" />
+		</div>
+	</xsl:template>
+
 
 	<!-- convert line feed to <br /> -->
 	<xsl:template name="lf2br">
