@@ -11,8 +11,8 @@ RewriteBase /
 </Files>
 
 # Redirect everything that goes to the wrong domain
-#RewriteCond %{HTTP_HOST} !^resihop.nu$ [NC]
-#RewriteRule ^(.*)$ http://resihop.nu/$1 [L,R=301]
+RewriteCond %{HTTP_HOST} !^resihop.nu$ [NC]
+RewriteRule ^(.*)$ http://resihop.nu/$1 [L,R=301]
 
 # Protect application and system files from being viewed
 RewriteRule ^(?:application|modules|system)\b.* index.php/$0 [L]
